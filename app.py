@@ -17,4 +17,4 @@ print(categoryNames)
 
 @app.route("/")
 def hello():
-    return "Hello, World! " + str(category[0])
+    return "Hello, World! " + str(categoryNames[0])
