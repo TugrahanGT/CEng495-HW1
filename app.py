@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template, request, url_for, redirect
 from pymongo import MongoClient
 from bson.json_util import dumps
 
@@ -17,4 +17,4 @@ print(categoryNames)
 
 @app.route("/")
 def hello():
-    return "Hello, World! " + str(categoryNames[0])
+    return render_template("index.html", title="First page")
