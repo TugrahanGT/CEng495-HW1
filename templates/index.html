@@ -7,14 +7,57 @@
         <title>
             Gökçwnify
         </title>
-        <style>
+        <style type="text/css">
+            .container {
+                width: 100vw;
+                float: left;
+            }
+            .container > nav{
+                width: 100vw;
+                margin-left: -1.5%;
+                border-color: #f44336 !important;
+                border-bottom: 1px solid #ccc !important;
 
+            }
+            .container > nav > a{
+                margin-left: 2%;
+            }
+            .container > nav > *{
+                margin-left: 30%;
+            }
+            .products {
+                width: 90vw;
+                margin-left: 10%;
+                margin-top: 2%;
+            }
+            .products > div > fieldset {
+                height: 22vh;
+            }
+            .list-group{
+                background-color: black;
+            }
+            .list-group-item{
+                background-color: rgba(0, 0, 0, 0.25);
+            }
+
+            .list-group-item > p{
+                color: whitesmoke;
+                font-size: large;
+                padding: 2px
+            }
+
+            .img-thumbnail{
+                width: 75px;
+                height: 75px;
+                margin-left: 15%;
+                background-color: #ccc;
+            }
         </style>
     </head>
     <body>
         <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#">Navbar</a>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="#">Gökçwnify</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -30,21 +73,81 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('view_second_page') }}">Second Page</a>
                         </li>
+                        <div class="horizontalgap" style="width:40vw"></div>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('sign_in') }}"> Sign In </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('log_in') }}"> Log In </a>
+                        </li>
                     </ul>
                 </div>
             </nav>
-    
-            <div class="jumbotron">
-                <h1 class="display-4">
-                      {% if title %}
-                        {{ title }}
-                      {% else %}
-                        Default title
-                      {% endif %}
-            </h1>
+
+            <div class="products">
+                <div class="clothing">
+                    <fieldset class="border p-2">
+                        <legend  class="float-none w-auto"> Clothing </legend>
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <img src="https://png.pngtree.com/element_our/sm/20180516/sm_5afc7a7754ec5.jpg" alt="..." class="img-thumbnail">
+                                        <p> Panda Bebeği </p>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="list-inline-item">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <img src="https://png.pngtree.com/element_our/sm/20180516/sm_5afc7a7754ec5.jpg" alt="..." class="img-thumbnail">
+                                        <p> Panda Bebeği </p>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="list-inline-item">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <img src="https://png.pngtree.com/element_our/sm/20180516/sm_5afc7a7754ec5.jpg" alt="..." class="img-thumbnail">
+                                        <p> Panda Bebeği </p>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="list-inline-item">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <img src="https://png.pngtree.com/element_our/sm/20180516/sm_5afc7a7754ec5.jpg" alt="..." class="img-thumbnail">
+                                        <p> Panda Bebeği </p>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="list-inline-item">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <img src="https://png.pngtree.com/element_our/sm/20180516/sm_5afc7a7754ec5.jpg" alt="..." class="img-thumbnail">
+                                        <p> Panda Bebeği </p>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>                          
+                    </fieldset>                     
+                </div>
+                <div class="computerComponents">
+                    <fieldset class="border p-2">
+                        <legend  class="float-none w-auto"> Computer Components </legend>
+                     </fieldset>
+                </div>
+                <div class="monitors">
+                    <fieldset class="border p-2">
+                        <legend  class="float-none w-auto"> Monitors </legend>
+                     </fieldset>
+                </div>
+                <div class="snacks">
+                    <fieldset class="border p-2">
+                        <legend  class="float-none w-auto"> Snacks </legend>
+                     </fieldset>
+                </div>
             </div>
         </div>
-    
-
     </body>
 </html>
