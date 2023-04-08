@@ -143,19 +143,19 @@
                             <a class="nav-link" href="url_for('index')">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <div class="horizontalgap" style="width:40vw"></div>
-                        {% if !user.loggedIn %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="#"> Sign In </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="url_for('login')"> Log In </a>
-                            </li>
-                        {% else %}
+                        {% if user.loggedIn %}
                             <li class="nav-item">
                                 <a class="nav-link" href="#"> {{ user.username }} </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#"> {{ user.role }} </a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"> Sign In </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="url_for('login')"> Log In </a>
                             </li>
                         {% endif %}
                     </ul>
