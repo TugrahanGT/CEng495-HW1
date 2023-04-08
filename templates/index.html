@@ -171,7 +171,7 @@
                             <div class="carosel-inner">
                                 {% for item in clothings %}
                                     <div class="carosel-items">
-                                        <a class="carosel-item-link" href="#">
+                                        <a class="carosel-item-link" href="{{ url_for('product', product = item.itemID, categoryID = 0) }}">
                                             <img class="carosel-item" src="{{ item.image }}" />
                                             <div class="limited">
                                                 <p class="lead"> {{ item.itemName }} </p>
