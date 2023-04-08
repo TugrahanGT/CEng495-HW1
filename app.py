@@ -51,6 +51,7 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
+        print(username, password)
         if not username:
             flash("Please enter a username!")
         elif not password:
