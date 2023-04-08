@@ -94,15 +94,14 @@ def add_review(username, reviewText, productID, categoryID):
         reviewList = clothingProducts[productID]["reviews"]
         lastReviewID = reviewList[len(reviewList) - 1]["reviewID"]
         newReview = {"reviewID": lastReviewID + 1, "reviewText": reviewText, "author": username}
-        reviewList.append(newReview)
         categories.update_one(
             {
                 "_id": categoryID,
                 "items.itemID": productID
             },
             {
-                "$set": {
-                    "items.$.reviews": reviewList
+                "$push": {
+                    "items.$.reviews": newReview
                 }
 
             }
