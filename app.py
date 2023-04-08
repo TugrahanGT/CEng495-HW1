@@ -43,12 +43,14 @@ user_loggedIn = {"loggedIn": False, "username": "", "role": ""}
 
 @app.route("/")
 def index():
+    global user_loggedIn
     print(clothingProducts)
     return render_template("index.html", clothings = clothingProducts, computerComponents = computerComponentProducts,
                            monitors = monitorProducts, snacks = snackProducts, user = user_loggedIn)
 
 @app.route("/login/", methods = ("GET", "POST"))
 def login():
+    global user_loggedIn
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
@@ -67,6 +69,7 @@ def login():
                 user_loggedIn["loggedIn"] = True
                 user_loggedIn["username"] = username
                 user_loggedIn["role"] = result["role"]["type"]
+                print(user_loggedIn)
                 return redirect(url_for("index", clothings = clothingProducts, computerComponents = computerComponentProducts,
                            monitors = monitorProducts, snacks = snackProducts, user = user_loggedIn))
     return render_template("login.html")
