@@ -76,9 +76,15 @@ def login():
 
 @app.route("/product", methods = ("GET", "POST"))
 def product():
+    if request.method == "POST":
+        username = request.form["username"]
+        reviewText = request.form["review"]
+        productID = request.form["itemID"]
+        categoryID = request.form["categoryID"]
+        print(username, reviewText, productID, categoryID)
     itemID = int(request.args.get("product"))
     categoryID = int(request.args.get("categoryID"))
     if categoryID == 0:
-        return render_template("product.html", user = user_loggedIn, item = clothingProducts[itemID])
+        return render_template("product.html", user = user_loggedIn, item = clothingProducts[itemID], categoryID = categoryID)
     else:
-        return render_template("product.html", user = user_loggedIn, item = snackProducts[itemID])
+        return render_template("product.html", user = user_loggedIn, item = snackProducts[itemID], categoryID = categoryID)
