@@ -344,6 +344,24 @@
                                     </div>
                                 </div>
                                 {% if user.loggedIn %}
+                                    <div class="col-lg-4 col-md-12 right-box">
+                                        <div class="card">
+                                            <div class="header">
+                                                <h2> Rate: </h2>
+                                                <form action = "#" class="row clearfix" method = "post">
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group">
+                                                            <input type="text" name="username" style="display: none;" value="{{ user.username }}"/>
+                                                            <input type="text" name="itemID" style="display: none;" value="{{ item.itemID }}"/>
+                                                            <input type="text" name="categoryID" style="display: none;" value="{{ categoryID }}"/>
+                                                            <input type="number" name = "rating" class="form-control no-resize" placeholder="Rating between 1 and 5"></input>
+                                                        </div>
+                                                        <button type="submit" name="submit_btn" class="btn btn-block btn-primary" value="rate">Submit Rating</button>
+                                                    </div>                                
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="card">
                                         <div class="header">
                                             <h2> Write a review </h2>
@@ -358,7 +376,7 @@
                                                             <input type="text" name="categoryID" style="display: none;" value="{{ categoryID }}"/>
                                                             <textarea rows="4" name = "review" class="form-control no-resize" placeholder="Please type what you want..."></textarea>
                                                         </div>
-                                                        <button type="submit" class="btn btn-block btn-primary">SUBMIT</button>
+                                                        <button type="submit" name="submit_btn" class="btn btn-block btn-primary" value="rev">Submit Review</button>
                                                     </div>                                
                                                 </form>
                                             </div>
