@@ -54,7 +54,6 @@ def login():
         if request.method == "POST":
             username = request.form["username"]
             password = request.form["password"]
-            print(username, password)
             if not username:
                 flash("Please enter a username!")
             elif not password:
@@ -117,36 +116,34 @@ def product():
                     for item in snacks["items"]:
                         snackProducts.append(item)
                     return render_template("product.html", user = user_loggedIn, item = snackProducts[productID], categoryID = categoryID)
-            else:
-                print("here")
-                rating = int(request.form["rating"])
-                print("here")
-                if add_rating(username, rating, productID, categoryID):
-                    categoriesList = list(categories.find())
-                    if categoryID == 0:
-                        clothingProducts = []
-                        clothings = categoriesList[0]
-                        for item in clothings["items"]:
-                            clothingProducts.append(item)
-                        return render_template("product.html", user = user_loggedIn, item = clothingProducts[productID], categoryID = categoryID)
-                    elif categoryID == 1:
-                        computerComponentProducts = []
-                        computerComponents = categoriesList[1]
-                        for item in computerComponents["items"]:
-                            computerComponentProducts.append(item)
-                        return render_template("product.html", user = user_loggedIn, item = computerComponentProducts[productID], categoryID = categoryID)
-                    elif categoryID == 2:
-                        monitorProducts = []
-                        monitors = categoriesList[2]
-                        for item in monitors["items"]:
-                            monitorProducts.append(item)
-                        return render_template("product.html", user = user_loggedIn, item = monitorProducts[productID], categoryID = categoryID)
-                    else:
-                        snackProducts = []
-                        snacks = categoriesList[3]
-                        for item in snacks["items"]:
-                            snackProducts.append(item)
-                        return render_template("product.html", user = user_loggedIn, item = snackProducts[productID], categoryID = categoryID)
+        elif request.form["submit_btn"] == "rate":
+            rating = int(request.form["rating"])
+            if add_rating(username, rating, productID, categoryID):
+                categoriesList = list(categories.find())
+                if categoryID == 0:
+                    clothingProducts = []
+                    clothings = categoriesList[0]
+                    for item in clothings["items"]:
+                        clothingProducts.append(item)
+                    return render_template("product.html", user = user_loggedIn, item = clothingProducts[productID], categoryID = categoryID)
+                elif categoryID == 1:
+                    computerComponentProducts = []
+                    computerComponents = categoriesList[1]
+                    for item in computerComponents["items"]:
+                        computerComponentProducts.append(item)
+                    return render_template("product.html", user = user_loggedIn, item = computerComponentProducts[productID], categoryID = categoryID)
+                elif categoryID == 2:
+                    monitorProducts = []
+                    monitors = categoriesList[2]
+                    for item in monitors["items"]:
+                        monitorProducts.append(item)
+                    return render_template("product.html", user = user_loggedIn, item = monitorProducts[productID], categoryID = categoryID)
+                else:
+                    snackProducts = []
+                    snacks = categoriesList[3]
+                    for item in snacks["items"]:
+                        snackProducts.append(item)
+                    return render_template("product.html", user = user_loggedIn, item = snackProducts[productID], categoryID = categoryID)
     itemID = int(request.args.get("product"))
     categoryID = int(request.args.get("categoryID"))
     if categoryID == 0:
