@@ -16,36 +16,31 @@ snackProducts = []
 categories = None
 users = None
 
+client = MongoClient("mongodb+srv://tugrahangt:ZwW11yGKKlPJPJEE@clusterdb.9sbkfgg.mongodb.net/?retryWrites=true&w=majority")
+db = client.hw1_mongoDB
+users = db.users
+categories = db.categories
+categoriesList = list(categories.find())
+clothings = categoriesList[0]
+computerComponents = categoriesList[1]
+monitors = categoriesList[2]
+snacks = categoriesList[3]
+for item in clothings["items"]:
+    clothingProducts.append(item)
+for item in computerComponents["items"]:
+    computerComponentProducts.append(item)
+for item in monitors["items"]:
+    monitorProducts.append(item)
+for item in snacks["items"]:
+    snackProducts.append(item)
+
+
+
 user_loggedIn = {"loggedIn": False, "username": "", "role": ""}
 
 @app.route("/")
 def index():
     global user_loggedIn, snackProducts, computerComponentProducts, clothingProducts, monitorProducts, categories, users
-
-    client = MongoClient("mongodb+srv://tugrahangt:ZwW11yGKKlPJPJEE@clusterdb.9sbkfgg.mongodb.net/?retryWrites=true&w=majority")
-    db = client.hw1_mongoDB
-
-    users = db.users
-
-    categories = db.categories
-    categoriesList = list(categories.find())
-
-    clothings = categoriesList[0]
-    computerComponents = categoriesList[1]
-    monitors = categoriesList[2]
-    snacks = categoriesList[3]
-
-    for item in clothings["items"]:
-        clothingProducts.append(item)
-
-    for item in computerComponents["items"]:
-        computerComponentProducts.append(item)
-
-    for item in monitors["items"]:
-        monitorProducts.append(item)
-
-    for item in snacks["items"]:
-        snackProducts.append(item)
 
     return render_template("index.html", clothings = clothingProducts, computerComponents = computerComponentProducts,
                            monitors = monitorProducts, snacks = snackProducts, user = user_loggedIn)
@@ -84,7 +79,8 @@ def product():
         reviewText = request.form["review"]
         productID = request.form["itemID"]
         categoryID = request.form["categoryID"]
-        add_review(username, reviewText, productID, categoryID)
+        if add_review(username, reviewText, productID, categoryID):
+            print("succeess")
     itemID = int(request.args.get("product"))
     categoryID = int(request.args.get("categoryID"))
     if categoryID == 0:
@@ -111,4 +107,4 @@ def add_review(username, reviewText, productID, categoryID):
 
             }
         )
-        print("success")
+        return True
