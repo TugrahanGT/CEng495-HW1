@@ -35,7 +35,6 @@ for item in snacks["items"]:
     snackProducts.append(item)
 
 
-
 user_loggedIn = {"loggedIn": False, "username": "", "role": ""}
 
 @app.route("/")
@@ -48,28 +47,40 @@ def index():
 @app.route("/login/", methods = ("GET", "POST"))
 def login():
     global user_loggedIn, users, clothingProducts, computerComponentProducts, snackProducts, monitorProducts
-    if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
-        print(username, password)
-        if not username:
-            flash("Please enter a username!")
-        elif not password:
-            flash("Please enter a password!")
-        else:
-            result = list(users.find({"username": username}))[0]
-            if not result:
-                flash("Wrong password or username")
-            elif password != result["password"]:
-                flash("Wrong password or username")
+    if user_loggedIn["loggedIn"]:
+        return redirect(url_for("index", clothings = clothingProducts, computerComponents = computerComponentProducts,
+                        monitors = monitorProducts, snacks = snackProducts, user = user_loggedIn))
+    else:
+        if request.method == "POST":
+            username = request.form["username"]
+            password = request.form["password"]
+            print(username, password)
+            if not username:
+                flash("Please enter a username!")
+            elif not password:
+                flash("Please enter a password!")
             else:
-                user_loggedIn["loggedIn"] = True
-                user_loggedIn["username"] = username
-                user_loggedIn["role"] = result["role"]["type"]
-                print(user_loggedIn)
-                return redirect(url_for("index", clothings = clothingProducts, computerComponents = computerComponentProducts,
+                result = list(users.find({"username": username}))[0]
+                if not result:
+                    flash("Wrong password or username")
+                elif password != result["password"]:
+                    flash("Wrong password or username")
+                else:
+                    user_loggedIn["loggedIn"] = True
+                    user_loggedIn["username"] = username
+                    user_loggedIn["role"] = result["role"]["type"]
+                    return redirect(url_for("index", clothings = clothingProducts, computerComponents = computerComponentProducts,
+                            monitors = monitorProducts, snacks = snackProducts, user = user_loggedIn))
+        return render_template("login.html")
+
+@app.route("/logout", methods = ("GET", "POST"))
+def logout():
+    global user_loggedIn, clothingProducts, computerComponentProducts, snackProducts, monitorProducts
+    user_loggedIn["loggedIn"] = False
+    user_loggedIn["username"] = ""
+    user_loggedIn["role"] = ""
+    return redirect(url_for("index", clothings = clothingProducts, computerComponents = computerComponentProducts,
                            monitors = monitorProducts, snacks = snackProducts, user = user_loggedIn))
-    return render_template("login.html")
 
 @app.route("/product", methods = ("GET", "POST"))
 def product():
