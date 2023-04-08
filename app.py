@@ -73,3 +73,12 @@ def login():
                 return redirect(url_for("index", clothings = clothingProducts, computerComponents = computerComponentProducts,
                            monitors = monitorProducts, snacks = snackProducts, user = user_loggedIn))
     return render_template("login.html")
+
+@app.route("/product", methods = ("GET", "POST"))
+def product():
+    itemID = int(request.args.get("product"))
+    categoryID = int(request.args.get("categoryID"))
+    if categoryID == 0:
+        return render_template("product.html", user = user_loggedIn, item = clothingProducts[itemID])
+    else:
+        return render_template("product.html", user = user_loggedIn, item = snackProducts[itemID])
