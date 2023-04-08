@@ -39,12 +39,13 @@ for item in monitors["items"]:
 for item in snacks["items"]:
     snackProducts.append(item)
 
+user_loggedIn = {"loggedIn": False, "username": "", "role": ""}
 
 @app.route("/")
 def index():
     print(clothingProducts)
     return render_template("index.html", clothings = clothingProducts, computerComponents = computerComponentProducts,
-                           monitors = monitorProducts, snacks = snackProducts)
+                           monitors = monitorProducts, snacks = snackProducts, user = user_loggedIn)
 
 @app.route("/login/", methods = ("GET", "POST"))
 def login():
@@ -63,5 +64,9 @@ def login():
             elif password != result["password"]:
                 flash("Wrong password or username")
             else:
-                return redirect(url_for("index"))
+                user_loggedIn["loggedIn"] = True
+                user_loggedIn["username"] = username
+                user_loggedIn["role"] = result["role"]["type"]
+                return redirect(url_for("index", clothings = clothingProducts, computerComponents = computerComponentProducts,
+                           monitors = monitorProducts, snacks = snackProducts, user = user_loggedIn))
     return render_template("login.html")

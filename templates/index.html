@@ -132,7 +132,7 @@
     <body>
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a class="navbar-brand" href="#">Gökçwnify</a>
+                <a class="navbar-brand" href="{{ url_for('index') }}">Gökçwnify</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -140,21 +140,24 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">First Page</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Second Page</a>
+                            <a class="nav-link" href="url_for('index')">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <div class="horizontalgap" style="width:40vw"></div>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"> Sign In </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"> Log In </a>
-                        </li>
+                        {% if !user.loggedIn %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"> Sign In </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="url_for('login')"> Log In </a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"> {{ user.username }} </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"> {{ user.role }} </a>
+                            </li>
+                        {% endif %}
                     </ul>
                 </div>
             </nav>
