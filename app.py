@@ -81,7 +81,25 @@ def product():
         categoryID = int(request.form["categoryID"])
         print(username, reviewText, productID, categoryID)
         if add_review(username, reviewText, productID, categoryID):
-            print("succeess")
+            categoriesList = list(categories.find())
+            clothings = categoriesList[0]
+            computerComponents = categoriesList[1]
+            monitors = categoriesList[2]
+            snacks = categoriesList[3]
+            clothingProducts = []
+            computerComponentProducts = []
+            monitorProducts = []
+            snackProducts = []
+            for item in clothings["items"]:
+                clothingProducts.append(item)
+            for item in computerComponents["items"]:
+                computerComponentProducts.append(item)
+            for item in monitors["items"]:
+                monitorProducts.append(item)
+            for item in snacks["items"]:
+                snackProducts.append(item)
+            return render_template("index.html", clothings = clothingProducts, computerComponents = computerComponentProducts,
+                                    monitors = monitorProducts, snacks = snackProducts, user = user_loggedIn)
     itemID = int(request.args.get("product"))
     categoryID = int(request.args.get("categoryID"))
     if categoryID == 0:
@@ -109,4 +127,3 @@ def add_review(username, reviewText, productID, categoryID):
         )
         return True
     
-add_review("basic", "Reeview Trial", 0, 0)
