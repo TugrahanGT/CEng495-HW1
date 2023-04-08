@@ -68,8 +68,7 @@ def login():
                     user_loggedIn["loggedIn"] = True
                     user_loggedIn["username"] = username
                     user_loggedIn["role"] = result["role"]["type"]
-                    return redirect(url_for("index", clothings = clothingProducts, computerComponents = computerComponentProducts,
-                            monitors = monitorProducts, snacks = snackProducts, user = user_loggedIn))
+                    return redirect(url_for("index"))
         return render_template("login.html")
 
 @app.route("/logout")
@@ -78,8 +77,7 @@ def logout():
     user_loggedIn["loggedIn"] = False
     user_loggedIn["username"] = ""
     user_loggedIn["role"] = ""
-    return redirect(url_for("index", clothings = clothingProducts, computerComponents = computerComponentProducts,
-                           monitors = monitorProducts, snacks = snackProducts, user = user_loggedIn))
+    return redirect(url_for("index"))
 
 @app.route("/product", methods = ("GET", "POST"))
 def product():
