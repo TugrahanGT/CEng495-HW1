@@ -79,51 +79,206 @@ def product():
         reviewText = request.form["review"]
         productID = int(request.form["itemID"])
         categoryID = int(request.form["categoryID"])
-        print(username, reviewText, productID, categoryID)
         if add_review(username, reviewText, productID, categoryID):
             categoriesList = list(categories.find())
-            clothings = categoriesList[0]
-            computerComponents = categoriesList[1]
-            monitors = categoriesList[2]
-            snacks = categoriesList[3]
-            clothingProducts = []
-            computerComponentProducts = []
-            monitorProducts = []
-            snackProducts = []
-            for item in clothings["items"]:
-                clothingProducts.append(item)
-            for item in computerComponents["items"]:
-                computerComponentProducts.append(item)
-            for item in monitors["items"]:
-                monitorProducts.append(item)
-            for item in snacks["items"]:
-                snackProducts.append(item)
-            return render_template("index.html", clothings = clothingProducts, computerComponents = computerComponentProducts,
-                                    monitors = monitorProducts, snacks = snackProducts, user = user_loggedIn)
+            if categoryID == 0:
+                clothingProducts = []
+                clothings = categoriesList[0]
+                for item in clothings["items"]:
+                    clothingProducts.append(item)
+                return render_template("product.html", user = user_loggedIn, item = clothingProducts[productID], categoryID = categoryID)
+            elif categoryID == 1:
+                computerComponentProducts = []
+                computerComponents = categoriesList[1]
+                for item in computerComponents["items"]:
+                    computerComponentProducts.append(item)
+                return render_template("product.html", user = user_loggedIn, item = computerComponentProducts[productID], categoryID = categoryID)
+            elif categoryID == 2:
+                monitorProducts = []
+                monitors = categoriesList[2]
+                for item in monitors["items"]:
+                    monitorProducts.append(item)
+                return render_template("product.html", user = user_loggedIn, item = monitorProducts[productID], categoryID = categoryID)
+            else:
+                snackProducts = []
+                snacks = categoriesList[3]
+                for item in snacks["items"]:
+                    snackProducts.append(item)
+                return render_template("product.html", user = user_loggedIn, item = snackProducts[productID], categoryID = categoryID)
     itemID = int(request.args.get("product"))
     categoryID = int(request.args.get("categoryID"))
     if categoryID == 0:
         return render_template("product.html", user = user_loggedIn, item = clothingProducts[itemID], categoryID = categoryID)
+    elif categoryID == 1:
+        return render_template("product.html", user = user_loggedIn, item = computerComponentProducts[itemID], categoryID = categoryID)
+    elif categoryID == 2:        
+        return render_template("product.html", user = user_loggedIn, item = monitorProducts[itemID], categoryID = categoryID)
     else:
         return render_template("product.html", user = user_loggedIn, item = snackProducts[itemID], categoryID = categoryID)
 
 def add_review(username, reviewText, productID, categoryID):
     global clothingProducts, computerComponentProducts, snackProducts, monitorProducts, categories
     if categoryID == 0:
-        reviewList = clothingProducts[productID]["reviews"]
-        lastReviewID = reviewList[len(reviewList) - 1]["reviewID"]
-        newReview = {"reviewID": lastReviewID + 1, "reviewText": reviewText, "author": username}
+        return add_rev_clothing(username, reviewText, productID)
+    elif categoryID == 1:
+        return add_rev_compCom(username, reviewText, productID)
+    elif categoryID == 2:
+        return add_rev_mon(username, reviewText, productID)
+    else:
+        return add_rev_snack(username, reviewText, productID)
+    
+def add_rev_clothing(username, reviewText, productID):
+    global clothingProducts, computerComponentProducts, snackProducts, monitorProducts, categories
+    reviewList = clothingProducts[productID]["reviews"]
+    idx, flag = 0, False
+    for review in reviewList:
+        if review["author"] == username:
+            flag = True
+            break
+        idx += 1
+    if flag:
+        clothingProducts[productID]["reviews"][idx]["reviewText"] = reviewText
         categories.update_one(
             {
-                "_id": categoryID,
+                "_id": 0,
+                "items.itemID": productID
+            },
+            {
+                "$set": {
+                    "items.$.reviews": clothingProducts[productID]["reviews"]
+                }
+            }
+        )
+    else:
+        lastReviewID = reviewList[len(reviewList) - 1]["reviewID"]
+        newReview = {"reviewID": lastReviewID + 1, "reviewText": reviewText, "author": username}
+        reviewList.append(newReview)
+        categories.update_one(
+            {
+                "_id": 0,
                 "items.itemID": productID
             },
             {
                 "$push": {
                     "items.$.reviews": newReview
                 }
-
             }
         )
-        return True
-    
+    return True
+
+def add_rev_compCom(username, reviewText, productID):
+    global clothingProducts, computerComponentProducts, snackProducts, monitorProducts, categories
+    reviewList = computerComponentProducts[productID]["reviews"]
+    idx, flag = 0, False
+    for review in reviewList:
+        if review["author"] == username:
+            flag = True
+            break
+        idx += 1
+    if flag:
+        computerComponentProducts[productID]["reviews"][idx]["reviewText"] = reviewText
+        categories.update_one(
+            {
+                "_id": 1,
+                "items.itemID": productID
+            },
+            {
+                "$set": {
+                    "items.$.reviews": computerComponentProducts[productID]["reviews"]
+                }
+            }
+        )
+    else:
+        lastReviewID = reviewList[len(reviewList) - 1]["reviewID"]
+        newReview = {"reviewID": lastReviewID + 1, "reviewText": reviewText, "author": username}
+        reviewList.append(newReview)
+        categories.update_one(
+            {
+                "_id": 1,
+                "items.itemID": productID
+            },
+            {
+                "$push": {
+                    "items.$.reviews": newReview
+                }
+            }
+        )
+    return True
+
+def add_rev_mon(username, reviewText, productID):
+    global clothingProducts, computerComponentProducts, snackProducts, monitorProducts, categories
+    reviewList = monitorProducts[productID]["reviews"]
+    idx, flag = 0, False
+    for review in reviewList:
+        if review["author"] == username:
+            flag = True
+            break
+        idx += 1
+    if flag:
+        monitorProducts[productID]["reviews"][idx]["reviewText"] = reviewText
+        categories.update_one(
+            {
+                "_id": 2,
+                "items.itemID": productID
+            },
+            {
+                "$set": {
+                    "items.$.reviews": monitorProducts[productID]["reviews"]
+                }
+            }
+        )
+    else:
+        lastReviewID = reviewList[len(reviewList) - 1]["reviewID"]
+        newReview = {"reviewID": lastReviewID + 1, "reviewText": reviewText, "author": username}
+        reviewList.append(newReview)
+        categories.update_one(
+            {
+                "_id": 2,
+                "items.itemID": productID
+            },
+            {
+                "$push": {
+                    "items.$.reviews": newReview
+                }
+            }
+        )
+    return True
+
+def add_rev_snack(username, reviewText, productID):
+    global clothingProducts, computerComponentProducts, snackProducts, monitorProducts, categories
+    reviewList = snackProducts[productID]["reviews"]
+    idx, flag = 0, False
+    for review in reviewList:
+        if review["author"] == username:
+            flag = True
+            break
+        idx += 1
+    if flag:
+        snackProducts[productID]["reviews"][idx]["reviewText"] = reviewText
+        categories.update_one(
+            {
+                "_id": 3,
+                "items.itemID": productID
+            },
+            {
+                "$set": {
+                    "items.$.reviews": snackProducts[productID]["reviews"]
+                }
+            }
+        )
+    else:
+        lastReviewID = reviewList[len(reviewList) - 1]["reviewID"]
+        newReview = {"reviewID": lastReviewID + 1, "reviewText": reviewText, "author": username}
+        reviewList.append(newReview)
+        categories.update_one(
+            {
+                "_id": 3,
+                "items.itemID": productID
+            },
+            {
+                "$push": {
+                    "items.$.reviews": newReview
+                }
+            }
+        )
+    return True
