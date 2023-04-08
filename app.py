@@ -377,8 +377,10 @@ def add_rate_clothing(username, rating, productID):
             },
             {
                 "$push": {
-                    "items.$.ratings": newRating,
-                    "items.$.rating": avgRating
+                    "items.$.ratings": newRating
+                },
+                "$set": {
+                    "items.$.rating": avgRating            
                 }
             }
         )
@@ -425,8 +427,10 @@ def add_rate_compCom(username, rating, productID):
             },
             {
                 "$push": {
-                    "items.$.ratings": newRating,
-                    "items.$.rating": avgRating
+                    "items.$.ratings": newRating
+                },
+                "$set": {
+                    "items.$.rating": avgRating            
                 }
             }
         )
@@ -473,8 +477,10 @@ def add_rate_mon(username, rating, productID):
             },
             {
                 "$push": {
-                    "items.$.ratings": newRating,
-                    "items.$.rating": avgRating
+                    "items.$.ratings": newRating
+                },
+                "$set": {
+                    "items.$.rating": avgRating            
                 }
             }
         )
@@ -521,8 +527,10 @@ def add_rate_snack(username, rating, productID):
             },
             {
                 "$push": {
-                    "items.$.ratings": newRating,
-                    "items.$.rating": avgRating
+                    "items.$.ratings": newRating
+                },
+                "$set": {
+                    "items.$.rating": avgRating            
                 }
             }
         )
