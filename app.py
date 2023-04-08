@@ -58,7 +58,7 @@ def login():
         elif not password:
             flash("Please enter a password!")
         else:
-            result = list(users.find({"username": username}))
+            result = list(users.find({"username": username}))[0]
             if not result:
                 flash("Wrong password or username")
             elif password != result["password"]:
