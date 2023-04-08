@@ -102,7 +102,7 @@ def add_review(username, reviewText, productID, categoryID):
             },
             {
                 "$set": {
-                    "reviews": reviewList
+                    "items.$.reviews": reviewList
                 }
 
             }
