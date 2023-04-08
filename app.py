@@ -118,6 +118,7 @@ def product():
                         snackProducts.append(item)
                     return render_template("product.html", user = user_loggedIn, item = snackProducts[productID], categoryID = categoryID)
             elif request.form["submit_btn"] == "rate":
+                print("here")
                 rating = int(request.form["rating"])
                 if add_rating(username, rating, productID, categoryID):
                     categoriesList = list(categories.find())
