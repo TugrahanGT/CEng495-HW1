@@ -89,6 +89,7 @@ def product():
         username = request.form["username"]
         productID = int(request.form["itemID"])
         categoryID = int(request.form["categoryID"])
+        print(request.form["submit_btn"])
         if request.form["submit_btn"] == "rev":
             reviewText = request.form["review"]
             if add_review(username, reviewText, productID, categoryID):
