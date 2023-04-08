@@ -72,7 +72,7 @@ def login():
                             monitors = monitorProducts, snacks = snackProducts, user = user_loggedIn))
         return render_template("login.html")
 
-@app.route("/logout", methods = ("GET", "POST"))
+@app.route("/logout")
 def logout():
     global user_loggedIn, clothingProducts, computerComponentProducts, snackProducts, monitorProducts
     user_loggedIn["loggedIn"] = False
