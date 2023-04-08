@@ -77,8 +77,9 @@ def product():
     if request.method == "POST":
         username = request.form["username"]
         reviewText = request.form["review"]
-        productID = request.form["itemID"]
-        categoryID = request.form["categoryID"]
+        productID = int(request.form["itemID"])
+        categoryID = int(request.form["categoryID"])
+        print(username, reviewText, productID, categoryID)
         if add_review(username, reviewText, productID, categoryID):
             print("succeess")
     itemID = int(request.args.get("product"))
@@ -89,7 +90,7 @@ def product():
         return render_template("product.html", user = user_loggedIn, item = snackProducts[itemID], categoryID = categoryID)
 
 def add_review(username, reviewText, productID, categoryID):
-    global clothingProducts, computerComponentProducts, snackProducts, monitorProducts
+    global clothingProducts, computerComponentProducts, snackProducts, monitorProducts, categories
     if categoryID == 0:
         reviewList = clothingProducts[productID]["reviews"]
         lastReviewID = reviewList[len(reviewList) - 1]["reviewID"]
@@ -107,3 +108,5 @@ def add_review(username, reviewText, productID, categoryID):
             }
         )
         return True
+    
+add_review("basic", "Reeview Trial", 0, 0)
