@@ -89,7 +89,6 @@ def product():
         username = request.form["username"]
         productID = int(request.form["itemID"])
         categoryID = int(request.form["categoryID"])
-        print(request.form["submit_btn"])
         if request.form["submit_btn"] == "rev":
             reviewText = request.form["review"]
             if add_review(username, reviewText, productID, categoryID):
@@ -118,9 +117,10 @@ def product():
                     for item in snacks["items"]:
                         snackProducts.append(item)
                     return render_template("product.html", user = user_loggedIn, item = snackProducts[productID], categoryID = categoryID)
-            elif request.form["submit_btn"] == "rate":
+            else:
                 print("here")
                 rating = int(request.form["rating"])
+                print("here")
                 if add_rating(username, rating, productID, categoryID):
                     categoriesList = list(categories.find())
                     if categoryID == 0:
