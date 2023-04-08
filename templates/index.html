@@ -52,7 +52,78 @@
                 margin-left: 15%;
                 background-color: #ccc;
             }
+            @media (max-width: 300px) {
+                .carosel-item {
+                    width: 100%;
+                }
+            }
+            @media (min-width: 300px) {
+                .carosel-item {
+                    width: 50%;
+                }
+            }
+            @media (min-width: 500px) {
+                .carosel-item {
+                    width: 33.333%;
+                }
+            }
+            @media (min-width: 768px) {
+                .carosel-item {
+                    width: 25%;
+                }
+            }
+            .carosel {
+                position: relative;
+            }
+            .carosel-inner {
+                white-space: nowrap;
+                overflow: hidden;
+                font-size: 0;
+                margin-left: 100px;
+                flex-wrap: wrap;
+            }
+            .carosel-item {
+                display: inline-block;
+                height: 125px;
+                width: 125px;
+            }
+            .carosel-control {
+                position: absolute;
+                top: 50%;
+                padding: 15px;
+                box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.5);
+                transform: translateY(-50%);
+                border-radius: 50%;
+                color: rgba(0, 0, 0, 0.5);
+                font-size: 30px;
+                display: inline-block;
+            }
+            .carosel-control-left {
+                left: 15px;
+            }
+            .carosel-control-right {
+                right: 15px;
+            }
+            .carosel-control:active,
+            .carosel-control:hover {
+                text-decoration: none;
+                color: rgba(0, 0, 0, 0.8);
+            }
+            .carosel-item-link{
+                height: 150px;
+                width: 150px;
+                margin-left: 25px;
+            }
+            .lead{
+                margin-left: 45px;
+            }
+            .carosel-items{
+                width: 150px;
+                height: 150px;
+                display: inline-block;
+            }
         </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     </head>
     <body>
         <div class="container">
@@ -88,48 +159,19 @@
                 <div class="clothing">
                     <fieldset class="border p-2">
                         <legend  class="float-none w-auto"> Clothing </legend>
-                        <ul class="list-inline">
-                            <li class="list-inline-item">
-                                <ul class="list-group">
-                                    <li class="list-group-item">
-                                        <img src="https://png.pngtree.com/element_our/sm/20180516/sm_5afc7a7754ec5.jpg" alt="..." class="img-thumbnail">
-                                        <p> Panda Bebeği </p>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="list-inline-item">
-                                <ul class="list-group">
-                                    <li class="list-group-item">
-                                        <img src="https://png.pngtree.com/element_our/sm/20180516/sm_5afc7a7754ec5.jpg" alt="..." class="img-thumbnail">
-                                        <p> Panda Bebeği </p>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="list-inline-item">
-                                <ul class="list-group">
-                                    <li class="list-group-item">
-                                        <img src="https://png.pngtree.com/element_our/sm/20180516/sm_5afc7a7754ec5.jpg" alt="..." class="img-thumbnail">
-                                        <p> Panda Bebeği </p>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="list-inline-item">
-                                <ul class="list-group">
-                                    <li class="list-group-item">
-                                        <img src="https://png.pngtree.com/element_our/sm/20180516/sm_5afc7a7754ec5.jpg" alt="..." class="img-thumbnail">
-                                        <p> Panda Bebeği </p>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="list-inline-item">
-                                <ul class="list-group">
-                                    <li class="list-group-item">
-                                        <img src="https://png.pngtree.com/element_our/sm/20180516/sm_5afc7a7754ec5.jpg" alt="..." class="img-thumbnail">
-                                        <p> Panda Bebeği </p>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>                          
+                        <div class="carosel" id="carosel1">
+                            <a class="carosel-control carosel-control-left glyphicon glyphicon-chevron-left" href="#"></a>
+                            <div class="carosel-inner">
+                                {% for item in clothings %}
+                                    <div class="carosel-items">
+                                        <a class="carosel-item-link" href="#">
+                                            <img class="carosel-item" src="{{ item.image }}" />
+                                            <p class="lead"> {{ item.itemName }} </p>
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            <a class="carosel-control carosel-control-right glyphicon glyphicon-chevron-right" href="#"></a>
+                          </div>
                     </fieldset>                     
                 </div>
                 <div class="computerComponents">
@@ -149,5 +191,15 @@
                 </div>
             </div>
         </div>
+        <script>
+            $('.carosel-control-right').click(function() {
+            $(this).blur();
+            $(this).parent().find('.carosel-items').first().insertAfter($(this).parent().find('.carosel-items').last());
+            });
+            $('.carosel-control-left').click(function() {
+            $(this).blur();
+            $(this).parent().find('.carosel-items').last().insertBefore($(this).parent().find('.carosel-items').first());
+            });
+        </script>
     </body>
 </html>

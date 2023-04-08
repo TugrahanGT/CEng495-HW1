@@ -8,13 +8,34 @@ db = client.hw1_mongoDB
 
 users = db.users
 categories = db.categories
-
 categoriesList = list(categories.find())
-categoryNames = list()
-for category in categoriesList:
-    categoryNames.append(category["name"])
-print(categoryNames)
+
+clothings = categoriesList[0]
+computerComponents = categoriesList[0]
+monitors = categoriesList[0]
+snacks = categoriesList[0]
+
+clothingProducts = []
+computerComponentProducts = []
+monitorProducts = []
+snackProducts = []
+
+for item in clothings["items"]:
+    clothingProducts.append(item)
+
+for item in computerComponents["items"]:
+    computerComponentProducts.append(item)
+
+for item in monitors["items"]:
+    monitorProducts.append(item)
+
+for item in snacks["items"]:
+    snackProducts.append(item)
+
+print(clothingProducts[0])
 
 @app.route("/")
-def hello():
-    return render_template("index.html", title="First page")
+def index():
+    print(clothingProducts)
+    return render_template("index.html", clothings = clothingProducts, computerComponents = computerComponentProducts,
+                           monitors = monitorProducts, snacks = snackProducts)
