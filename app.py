@@ -19,7 +19,7 @@ users = None
 client = MongoClient("mongodb+srv://tugrahangt:ZwW11yGKKlPJPJEE@clusterdb.9sbkfgg.mongodb.net/?retryWrites=true&w=majority")
 db = client.hw1_mongoDB
 users = db.users
-categories = db.categories
+categories = db.finalizedCategories
 categoriesList = list(categories.find())
 clothings = categoriesList[0]
 computerComponents = categoriesList[1]
