@@ -46,7 +46,7 @@ def index():
     return render_template("index.html", clothings = clothingProducts, computerComponents = computerComponentProducts,
                            monitors = monitorProducts, snacks = snackProducts)
 
-@app.route("/login/", methods = ("GET", "POST"))
+@app.route("/login", methods = ("GET", "POST"))
 def login():
     if request.method == "POST":
         username = request.form["username"]
