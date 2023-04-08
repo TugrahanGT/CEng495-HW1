@@ -340,16 +340,16 @@ def add_rate_clothing(username, rating, productID):
     global clothingProducts, computerComponentProducts, snackProducts, monitorProducts, categories
     ratingList = clothingProducts[productID]["ratings"]
     idx, flag, totalRating = 0, False, 0
-    for rating in ratingList:
-        if rating["author"] == username:
+    for ratings in ratingList:
+        if ratings["author"] == username:
             flag = True
             break
         idx += 1
     if flag:
         ratingList[idx]["rating"] = rating
         ratingCount = len(ratingList)
-        for rating in ratingList:
-            totalRating += rating["rating"]
+        for ratings in ratingList:
+            totalRating += ratings["rating"]
         avgRating = totalRating / ratingCount
         categories.update_one(
             {
@@ -366,8 +366,8 @@ def add_rate_clothing(username, rating, productID):
     else:
         lastRatingID = ratingList[len(ratingList) - 1]["ratingID"]
         ratingCount = len(ratingList)
-        for rating in ratingList:
-            totalRating += rating["rating"]
+        for ratings in ratingList:
+            totalRating += ratings["rating"]
         avgRating = (totalRating + rating) / (ratingCount + 1)
         newRating = {"ratingID": lastRatingID + 1, "rating": rating, "author": username}
         categories.update_one(
@@ -390,16 +390,16 @@ def add_rate_compCom(username, rating, productID):
     global clothingProducts, computerComponentProducts, snackProducts, monitorProducts, categories
     ratingList = computerComponentProducts[productID]["ratings"]
     idx, flag, totalRating = 0, False, 0
-    for rating in ratingList:
-        if rating["author"] == username:
+    for ratings in ratingList:
+        if ratings["author"] == username:
             flag = True
             break
         idx += 1
     if flag:
         ratingList[idx]["rating"] = rating
         ratingCount = len(ratingList)
-        for rating in ratingList:
-            totalRating += rating["rating"]
+        for ratings in ratingList:
+            totalRating += ratings["rating"]
         avgRating = totalRating / ratingCount
         categories.update_one(
             {
@@ -416,8 +416,8 @@ def add_rate_compCom(username, rating, productID):
     else:
         lastRatingID = ratingList[len(ratingList) - 1]["ratingID"]
         ratingCount = len(ratingList)
-        for rating in ratingList:
-            totalRating += rating["rating"]
+        for ratings in ratingList:
+            totalRating += ratings["rating"]
         avgRating = (totalRating + rating) / (ratingCount + 1)
         newRating = {"ratingID": lastRatingID + 1, "rating": rating, "author": username}
         categories.update_one(
@@ -440,16 +440,16 @@ def add_rate_mon(username, rating, productID):
     global clothingProducts, computerComponentProducts, snackProducts, monitorProducts, categories
     ratingList = monitorProducts[productID]["ratings"]
     idx, flag, totalRating = 0, False, 0
-    for rating in ratingList:
-        if rating["author"] == username:
+    for ratings in ratingList:
+        if ratings["author"] == username:
             flag = True
             break
         idx += 1
     if flag:
         ratingList[idx]["rating"] = rating
         ratingCount = len(ratingList)
-        for rating in ratingList:
-            totalRating += rating["rating"]
+        for ratings in ratingList:
+            totalRating += ratings["rating"]
         avgRating = totalRating / ratingCount
         categories.update_one(
             {
@@ -466,8 +466,8 @@ def add_rate_mon(username, rating, productID):
     else:
         lastRatingID = ratingList[len(ratingList) - 1]["ratingID"]
         ratingCount = len(ratingList)
-        for rating in ratingList:
-            totalRating += rating["rating"]
+        for ratings in ratingList:
+            totalRating += ratings["rating"]
         avgRating = (totalRating + rating) / (ratingCount + 1)
         newRating = {"ratingID": lastRatingID + 1, "rating": rating, "author": username}
         categories.update_one(
@@ -490,16 +490,16 @@ def add_rate_snack(username, rating, productID):
     global clothingProducts, computerComponentProducts, snackProducts, monitorProducts, categories
     ratingList = snackProducts[productID]["ratings"]
     idx, flag, totalRating = 0, False, 0
-    for rating in ratingList:
-        if rating["author"] == username:
+    for ratings in ratingList:
+        if ratings["author"] == username:
             flag = True
             break
         idx += 1
     if flag:
         ratingList[idx]["rating"] = rating
         ratingCount = len(ratingList)
-        for rating in ratingList:
-            totalRating += rating["rating"]
+        for ratings in ratingList:
+            totalRating += ratings["rating"]
         avgRating = totalRating / ratingCount
         categories.update_one(
             {
@@ -516,8 +516,8 @@ def add_rate_snack(username, rating, productID):
     else:
         lastRatingID = ratingList[len(ratingList) - 1]["ratingID"]
         ratingCount = len(ratingList)
-        for rating in ratingList:
-            totalRating += rating["rating"]
+        for ratings in ratingList:
+            totalRating += ratings["rating"]
         avgRating = (totalRating + rating) / (ratingCount + 1)
         newRating = {"ratingID": lastRatingID + 1, "rating": rating, "author": username}
         categories.update_one(
