@@ -79,7 +79,7 @@
                 white-space: nowrap;
                 overflow: hidden;
                 font-size: 0;
-                margin-left: 100px;
+                margin-left: 125px;
                 flex-wrap: wrap;
             }
             .carosel-item {
@@ -114,13 +114,17 @@
                 width: 150px;
                 margin-left: 25px;
             }
-            .lead{
-                margin-left: 45px;
-            }
             .carosel-items{
                 width: 150px;
                 height: 150px;
                 display: inline-block;
+                position: relative;
+                margin-left: 25px;
+            }
+            .limited{
+                width: 25px;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
             }
         </style>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -166,10 +170,13 @@
                                     <div class="carosel-items">
                                         <a class="carosel-item-link" href="#">
                                             <img class="carosel-item" src="{{ item.image }}" />
-                                            <p class="lead"> {{ item.itemName }} </p>
+                                            <div class="limited">
+                                                <p class="lead"> {{ item.itemName }} </p>
+                                            </div>
                                         </a>
                                     </div>
                                 {% endfor %}
+                            </div>
                             <a class="carosel-control carosel-control-right glyphicon glyphicon-chevron-right" href="#"></a>
                           </div>
                     </fieldset>                     
@@ -177,16 +184,64 @@
                 <div class="computerComponents">
                     <fieldset class="border p-2">
                         <legend  class="float-none w-auto"> Computer Components </legend>
+                        <div class="carosel" id="carosel1">
+                            <a class="carosel-control carosel-control-left glyphicon glyphicon-chevron-left" href="#"></a>
+                            <div class="carosel-inner">
+                                {% for item in computerComponents %}
+                                    <div class="carosel-items">
+                                        <a class="carosel-item-link" href="#">
+                                            <img class="carosel-item" src="{{ item.image }}" />
+                                            <div class="limited">
+                                                <p class="lead"> {{ item.itemName }} </p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <a class="carosel-control carosel-control-right glyphicon glyphicon-chevron-right" href="#"></a>
+                          </div>
                      </fieldset>
                 </div>
                 <div class="monitors">
                     <fieldset class="border p-2">
                         <legend  class="float-none w-auto"> Monitors </legend>
+                        <div class="carosel" id="carosel1">
+                            <a class="carosel-control carosel-control-left glyphicon glyphicon-chevron-left" href="#"></a>
+                            <div class="carosel-inner">
+                                {% for item in monitors %}
+                                    <div class="carosel-items">
+                                        <a class="carosel-item-link" href="#">
+                                            <img class="carosel-item" src="{{ item.image }}" />
+                                            <div class="limited">
+                                                <p class="lead"> {{ item.itemName }} </p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <a class="carosel-control carosel-control-right glyphicon glyphicon-chevron-right" href="#"></a>
+                          </div>
                      </fieldset>
                 </div>
                 <div class="snacks">
                     <fieldset class="border p-2">
                         <legend  class="float-none w-auto"> Snacks </legend>
+                        <div class="carosel" id="carosel1">
+                            <a class="carosel-control carosel-control-left glyphicon glyphicon-chevron-left" href="#"></a>
+                            <div class="carosel-inner">
+                                {% for item in snacks %}
+                                    <div class="carosel-items">
+                                        <a class="carosel-item-link" href="#">
+                                            <img class="carosel-item" src="{{ item.image }}" />
+                                            <div class="limited">
+                                                <p class="lead"> {{ item.itemName }} </p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <a class="carosel-control carosel-control-right glyphicon glyphicon-chevron-right" href="#"></a>
+                          </div>
                      </fieldset>
                 </div>
             </div>
