@@ -142,7 +142,7 @@
                         <div class="horizontalgap" style="width:50vw"></div>
                         {% if user.loggedIn %}
                             <li class="nav-item">
-                                <a class="nav-link" href="#"> {{ user.username }} </a>
+                                <a class="nav-link" href="#"> {{ session.username }} </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url_for('logout') }}"> Log Out </a>

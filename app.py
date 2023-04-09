@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, url_for, redirect, flash
+from flask import Flask, render_template, request, url_for, redirect, flash, session
+from flask_session import Session
 from pymongo import MongoClient
 from bson.json_util import dumps
 import os
@@ -7,6 +8,9 @@ secret_key = os.urandom(24).hex()
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = secret_key
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
 clothingProducts = []
 computerComponentProducts = []
@@ -40,7 +44,6 @@ user_loggedIn = {"loggedIn": False, "username": "", "role": ""}
 @app.route("/")
 def index():
     global user_loggedIn, snackProducts, computerComponentProducts, clothingProducts, monitorProducts, categories, users
-
     return render_template("index.html", clothings = clothingProducts, computerComponents = computerComponentProducts,
                            monitors = monitorProducts, snacks = snackProducts, user = user_loggedIn)
 
@@ -68,6 +71,7 @@ def login():
                     user_loggedIn["loggedIn"] = True
                     user_loggedIn["username"] = username
                     user_loggedIn["role"] = result["role"]["type"]
+                    session["username"] = username
                     return redirect(url_for("index"))
         return render_template("login.html")
 
