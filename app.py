@@ -38,10 +38,6 @@ for item in monitors["items"]:
 for item in snacks["items"]:
     snackProducts.append(item)
 
-session["loggedIn"] = False
-session["username"] = None
-session["role"] = None
-
 @app.route("/")
 def index():
     global snackProducts, computerComponentProducts, clothingProducts, monitorProducts, categories
@@ -51,7 +47,7 @@ def index():
 @app.route("/login/", methods = ("GET", "POST"))
 def login():
     global clothingProducts, computerComponentProducts, snackProducts, monitorProducts
-    if not session["username"]:
+    if not session.get("username"):
         if request.method == "POST":
             username = request.form["username"]
             password = request.form["password"]
