@@ -43,17 +43,14 @@ user_loggedIn = {"loggedIn": False, "username": "", "role": ""}
 
 @app.route("/")
 def index():
-    global user_loggedIn, snackProducts, computerComponentProducts, clothingProducts, monitorProducts, categories, users
+    global snackProducts, computerComponentProducts, clothingProducts, monitorProducts, categories
     return render_template("index.html", clothings = clothingProducts, computerComponents = computerComponentProducts,
-                           monitors = monitorProducts, snacks = snackProducts, user = user_loggedIn)
+                           monitors = monitorProducts, snacks = snackProducts)
 
 @app.route("/login/", methods = ("GET", "POST"))
 def login():
-    global user_loggedIn, users, clothingProducts, computerComponentProducts, snackProducts, monitorProducts
-    if user_loggedIn["loggedIn"]:
-        return redirect(url_for("index", clothings = clothingProducts, computerComponents = computerComponentProducts,
-                        monitors = monitorProducts, snacks = snackProducts, user = user_loggedIn))
-    else:
+    global clothingProducts, computerComponentProducts, snackProducts, monitorProducts
+    if not session["username"]:
         if request.method == "POST":
             username = request.form["username"]
             password = request.form["password"]
@@ -68,24 +65,25 @@ def login():
                 elif password != result["password"]:
                     flash("Wrong password or username")
                 else:
-                    user_loggedIn["loggedIn"] = True
-                    user_loggedIn["username"] = username
-                    user_loggedIn["role"] = result["role"]["type"]
+                    session["loggedIn"] = True
                     session["username"] = username
+                    session["role"] = result["role"]["type"]
                     return redirect(url_for("index"))
         return render_template("login.html")
+    else:
+        return redirect(url_for("index"))
 
 @app.route("/logout")
 def logout():
-    global user_loggedIn, clothingProducts, computerComponentProducts, snackProducts, monitorProducts
-    user_loggedIn["loggedIn"] = False
-    user_loggedIn["username"] = ""
-    user_loggedIn["role"] = ""
+    global clothingProducts, computerComponentProducts, snackProducts, monitorProducts
+    session["loggedIn"] = False
+    session["username"] = None
+    session["role"] = None
     return redirect(url_for("index"))
 
 @app.route("/product", methods = ("GET", "POST"))
 def product():
-    global user_loggedIn, clothingProducts, computerComponentProducts, snackProducts, monitorProducts
+    global clothingProducts, computerComponentProducts, snackProducts, monitorProducts
     if request.method == "POST":
         username = request.form["username"]
         productID = int(request.form["itemID"])

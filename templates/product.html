@@ -293,9 +293,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <div class="horizontalgap" style="width:50vw"></div>
-                        {% if user.loggedIn %}
+                        {% if session.loggedIn %}
                             <li class="nav-item">
-                                <a class="nav-link" href="#"> {{ user.username }} </a>
+                                <a class="nav-link" href="#"> {{ session.username }} </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url_for('logout') }}"> Log Out </a>
@@ -343,7 +343,7 @@
                                         </ul>                                        
                                     </div>
                                 </div>
-                                {% if user.loggedIn %}
+                                {% if session.loggedIn %}
                                     <div class="col-lg-4 col-md-12 right-box">
                                         <div class="card">
                                             <div class="header">
@@ -351,7 +351,7 @@
                                                 <form action = "#" class="row clearfix" method = "post">
                                                     <div class="col-sm-12">
                                                         <div class="form-group">
-                                                            <input type="text" name="username" style="display: none;" value="{{ user.username }}"/>
+                                                            <input type="text" name="username" style="display: none;" value="{{ session.username }}"/>
                                                             <input type="text" name="itemID" style="display: none;" value="{{ item.itemID }}"/>
                                                             <input type="text" name="categoryID" style="display: none;" value="{{ categoryID }}"/>
                                                             <input type="number" name = "rating" class="form-control no-resize" placeholder="Rating between 1 and 5"></input>
@@ -371,7 +371,7 @@
                                                 <form action = "#" class="row clearfix" method = "post">
                                                     <div class="col-sm-12">
                                                         <div class="form-group">
-                                                            <input type="text" name="username" style="display: none;" value="{{ user.username }}"/>
+                                                            <input type="text" name="username" style="display: none;" value="{{ session.username }}"/>
                                                             <input type="text" name="itemID" style="display: none;" value="{{ item.itemID }}"/>
                                                             <input type="text" name="categoryID" style="display: none;" value="{{ categoryID }}"/>
                                                             <textarea rows="4" name = "review" class="form-control no-resize" placeholder="Please type what you want..."></textarea>
