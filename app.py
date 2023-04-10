@@ -50,7 +50,7 @@ def index():
     if not request.args.get("categoryID"):
         return render_template("index.html", items = all_items, categoryID = -1)
     else:
-        return render_template("index.html", items = all_items, categoryID = -1)
+        return render_template("index.html", items = all_items, categoryID = int(request.args.get("categoryID")))
     
 @app.route("/login/", methods = ("GET", "POST"))
 def login():

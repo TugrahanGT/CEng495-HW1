@@ -15,7 +15,7 @@
             text-decoration: none !important;
         }
         .card-img-top{
-            width: 100%;
+            width: 225px;
             height: 225px;
         }
         .horizontal-divider{
@@ -83,7 +83,7 @@
                 {% for item in category[1] %}
                     <div class="col-md-4">
                         <div class="card mb-4 box-shadow">
-                            <img class="card-img-top" alt="{{ item.itemName }}" style="height: 225px; width: 100%; display: block;" src="{{ item.image }}" data-holder-rendered="true">
+                            <img class="card-img-top" alt="{{ item.itemName }}" src="{{ item.image }}" data-holder-rendered="true">
                             <div class="card-body">
                                 <p class="card-text text-center" style="font-weight:bold;"> {{ item.itemName }} </p>
                                 <p class="card-text" style="font-weight: bold; font-size: 13px;"> Seller: <span> {{ item.seller }} </span></p>
@@ -91,10 +91,10 @@
                                 <p class="card-text" style="font-weight: bold; font-size: 13px;"> Rating: <span> {{ item.rating }} </span></p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <a  class="btn btn-sm btn-outline-secondary" href="url_for('product', product = item.itemID, categoryID = category[0])">View</a>
+                                        <a  class="btn btn-sm btn-outline-secondary" href="{{ url_for('product', product = item.itemID, categoryID = category[0]) }}">View</a>
                                         {% if session.loggedIn%}
                                           {% if session.role == "Admin" %}
-                                            <a class="btn btn-sm btn-outline-secondary" href="url_for('delete', product = item.itemID, categoryID = category[0])" style="color: red;">Delete</a>
+                                            <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('delete', product = item.itemID, categoryID = category[0]) }}" style="color: red;">Delete</a>
                                           {% endif %}
                                         {% endif %}
                                     </div>
@@ -108,7 +108,7 @@
               {% for item in items[categoryID] %}
                   <div class="col-md-4">
                       <div class="card mb-4 box-shadow">
-                          <img class="card-img-top" alt="{{ item.itemName }}" style="height: 225px; width: 100%; display: block;" src="{{ item.image }}" data-holder-rendered="true">
+                          <img class="card-img-top" alt="{{ item.itemName }}" src="{{ item.image }}" data-holder-rendered="true">
                           <div class="card-body">
                               <p class="card-text text-center" style="font-weight:bold;"> {{ item.itemName }} </p>
                               <p class="card-text" style="font-weight: bold; font-size: 13px;"> Seller: <span> {{ item.seller }} </span></p>
@@ -116,10 +116,10 @@
                               <p class="card-text" style="font-weight: bold; font-size: 13px;"> Rating: <span> {{ item.rating }} </span></p>
                               <div class="d-flex justify-content-between align-items-center">
                                   <div class="btn-group">
-                                      <a  class="btn btn-sm btn-outline-secondary" href="url_for('product', product = item.itemID, categoryID = categoryID)">View</a>
+                                      <a  class="btn btn-sm btn-outline-secondary" href="{{ url_for('product', product = item.itemID, categoryID = categoryID) }}">View</a>
                                       {% if session.loggedIn%}
                                         {% if session.role == "Admin" %}
-                                          <a class="btn btn-sm btn-outline-secondary" href="url_for('delete', product = item.itemID, categoryID = categoryID)" style="color: red;">Delete</a>
+                                          <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('delete', product = item.itemID, categoryID = categoryID) }}" style="color: red;">Delete</a>
                                         {% endif %}
                                       {% endif %}
                                   </div>
