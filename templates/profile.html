@@ -74,6 +74,27 @@
                       <p class="text-muted mb-1">{{ session.role }}</p>
                     </div>
                   </div>
+                  <div class="card mb-4 mb-lg-0">
+                    <div class="card-body p-0">
+                      <ul class="list-group list-group-flush rounded-3">
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                          <a class="nav-link" href="#" onclick="openForm('clothingForm')"> Add New Clothing </a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                          <a class="nav-link" href="#" onclick="openForm('ccForm')"> Add New Computer Component </a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                          <a class="nav-link" href="#" onclick="openForm('monitorForm')"> Add New Monitor </a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                          <a class="nav-link" href="#" onclick="openForm('snackForm')"> Add New Snack </a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                          <a class="nav-link" href="#" onclick="openForm('aUserForm')"> Add New User </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
                 <div class="col-lg-8">
                   <div class="card mb-4">
@@ -103,11 +124,11 @@
                         <div class="card-body">
                           <p class="mb-4"><span class="text-primary font-italic me-1">Reviews</span>
                           </p>
-                          <ul class="comment-reply list-unstyled" style="overflow-y: scroll;">
+                          <ul class="comment-reply list-unstyled" style="overflow-y: scroll; overflow-x: hidden;">
                             {% for review in userReviews %}
                             <li class="row clearfix">
                                 <div class="text-box col-md-10 col-8 p-l-0 p-r0">
-                                    <h5 class="m-b-0"> {{ review.productName }} </h5>
+                                    <h5 class="m-b-0" style="font-weight: bold;"> Product Name: <span style="color: midnightblue"> {{ review.productName }} </span></h5>
                                     <p> {{ review.reviewText }} </p>
                                 </div>
                             </li>
@@ -116,10 +137,230 @@
                         </div>
                       </div>
                     </div>
+                    <div class="col-md-12">
+                      <div class="card mb-4 mb-md-0">
+                        <div class="card-body">
+                          <form action="{{ url_for('addProduct', categoryID = 0) }}"id="clothingForm" style="display: none;">
+                              <div class="row mb-4">
+                                <div class="col">
+                                    <div class="form-outline">
+                                    <input type="text" id="form6Example1" class="form-control" />
+                                    <label class="form-label" for="form6Example1">Name</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                    <input type="text" id="form6Example2" class="form-control" />
+                                    <label class="form-label" for="form6Example2">Description</label>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="row mb-4">
+                                <div class="col">
+                                    <div class="form-outline">
+                                    <input type="number" id="form6Example1" class="form-control" />
+                                    <label class="form-label" for="form6Example1">Price</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                    <input type="text" id="form6Example2" class="form-control" />
+                                    <label class="form-label" for="form6Example2">Seller</label>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="row mb-4">
+                                <div class="col">
+                                    <div class="form-outline">
+                                    <input type="text" id="form6Example1" class="form-control" />
+                                    <label class="form-label" for="form6Example1">Image Link</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                    <input type="text" id="form6Example2" class="form-control" />
+                                    <label class="form-label" for="form6Example2">Size</label>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="row mb-4">
+                                <div class="col">
+                                    <div class="form-outline">
+                                    <input type="text" id="form6Example1" class="form-control" />
+                                    <label class="form-label" for="form6Example1">Colour</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline">
+                                    <button type="submit" class="btn btn-primary btn-block mb-4">Add Clothing</button>
+                                    </div>
+                                </div>
+                              </div>
+                          </form>
+
+                          
+                          <form action="{{ url_for('addProduct', categoryID = 1) }}"id="ccForm" style="display: none;">
+                            <div class="row mb-4">
+                              <div class="col">
+                                  <div class="form-outline">
+                                  <input name="name" type="text" id="form6Example1" class="form-control" />
+                                  <label class="form-label" for="form6Example1">Name</label>
+                                  </div>
+                              </div>
+                              <div class="col">
+                                  <div class="form-outline">
+                                  <input name="descp" type="text" id="form6Example2" class="form-control" />
+                                  <label class="form-label" for="form6Example2">Description</label>
+                                  </div>
+                              </div>
+                            </div>
+                            <div class="row mb-4">
+                              <div class="col">
+                                  <div class="form-outline">
+                                  <input name="price" type="number" id="form6Example1" class="form-control" />
+                                  <label class="form-label" for="form6Example1">Price</label>
+                                  </div>
+                              </div>
+                              <div class="col">
+                                  <div class="form-outline">
+                                  <input name="seller" type="text" id="form6Example2" class="form-control" />
+                                  <label class="form-label" for="form6Example2">Seller</label>
+                                  </div>
+                              </div>
+                            </div>
+                            <div class="row mb-4">
+                              <div class="col">
+                                  <div class="form-outline">
+                                  <input name="img" type="text" id="form6Example1" class="form-control" />
+                                  <label class="form-label" for="form6Example1">Image Link</label>
+                                  </div>
+                              </div>
+                              <div class="col">
+                                  <div class="form-outline">
+                                  <input name="spec" type="text" id="form6Example2" class="form-control" />
+                                  <label class="form-label" for="form6Example2">Spec</label>
+                                  </div>
+                              </div>
+                            </div>
+                            <div class="row mb-4">
+                              <div class="col">
+                                  <div class="form-outline">
+                                  <button type="submit" class="btn btn-primary btn-block mb-4">Add Computer Component</button>
+                                  </div>
+                              </div>
+                            </div>
+                        </form>
+
+                        
+                        <form action="{{ url_for('addProduct', categoryID = 2) }}"id="monitorForm" style="display: none;">
+                            <div class="row mb-4">
+                              <div class="col">
+                                  <div class="form-outline">
+                                  <input type="text" id="form6Example1" class="form-control" />
+                                  <label class="form-label" for="form6Example1">Name</label>
+                                  </div>
+                              </div>
+                              <div class="col">
+                                  <div class="form-outline">
+                                  <input type="text" id="form6Example2" class="form-control" />
+                                  <label class="form-label" for="form6Example2">Description</label>
+                                  </div>
+                              </div>
+                            </div>
+                            <div class="row mb-4">
+                              <div class="col">
+                                  <div class="form-outline">
+                                  <input type="number" id="form6Example1" class="form-control" />
+                                  <label class="form-label" for="form6Example1">Price</label>
+                                  </div>
+                              </div>
+                              <div class="col">
+                                  <div class="form-outline">
+                                  <input type="text" id="form6Example2" class="form-control" />
+                                  <label class="form-label" for="form6Example2">Seller</label>
+                                  </div>
+                              </div>
+                            </div>
+                            <div class="row mb-4">
+                              <div class="col">
+                                  <div class="form-outline">
+                                  <input type="text" id="form6Example1" class="form-control" />
+                                  <label class="form-label" for="form6Example1">Image Link</label>
+                                  </div>
+                              </div>
+                              <div class="col">
+                                  <div class="form-outline">
+                                  <input type="text" id="form6Example2" class="form-control" />
+                                  <label class="form-label" for="form6Example2">Spec</label>
+                                  </div>
+                              </div>
+                            </div>
+                            <div class="row mb-4">
+                              <div class="col">
+                                  <div class="form-outline">
+                                  <button type="submit" class="btn btn-primary btn-block mb-4">Add Monitor</button>
+                                  </div>
+                              </div>
+                            </div>
+                        </form>
+
+                        
+                        <form action="{{ url_for('addProduct', categoryID = 3) }}"id="snackForm" style="display: none;">
+                            <div class="row mb-4">
+                              <div class="col">
+                                  <div class="form-outline">
+                                  <input type="text" id="form6Example1" class="form-control" />
+                                  <label class="form-label" for="form6Example1">Name</label>
+                                  </div>
+                              </div>
+                              <div class="col">
+                                  <div class="form-outline">
+                                  <input type="text" id="form6Example2" class="form-control" />
+                                  <label class="form-label" for="form6Example2">Description</label>
+                                  </div>
+                              </div>
+                            </div>
+                            <div class="row mb-4">
+                              <div class="col">
+                                  <div class="form-outline">
+                                  <input type="number" id="form6Example1" class="form-control" />
+                                  <label class="form-label" for="form6Example1">Price</label>
+                                  </div>
+                              </div>
+                              <div class="col">
+                                  <div class="form-outline">
+                                  <input type="text" id="form6Example2" class="form-control" />
+                                  <label class="form-label" for="form6Example2">Seller</label>
+                                  </div>
+                              </div>
+                            </div>
+                            <div class="row mb-4">
+                              <div class="col">
+                                  <div class="form-outline">
+                                  <input type="text" id="form6Example1" class="form-control" />
+                                  <label class="form-label" for="form6Example1">Image Link</label>
+                                  </div>
+                              </div>
+                              <div class="col">
+                                  <div class="form-outline">
+                                  <button type="submit" class="btn btn-primary btn-block mb-4">Add Snack</button>
+                                  </div>
+                              </div>
+                            </div>
+                        </form>
+                      </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+          <script>
+            function openForm(formId){
+                console.log(formId)
+                document.getElementById(formId).style.display = "block";
+            }
+          </script>
           </section>
       </main>
   </body>

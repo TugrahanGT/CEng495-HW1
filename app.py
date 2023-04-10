@@ -152,7 +152,41 @@ def deleteProduct():
 
 @app.route("/addProduct", methods = ("GET", "POST"))
 def addProduct():
-    pass
+    global categories
+    if request.method == "POST":
+        if int(request.args.get("categoryID")) == 1:
+            productName = request.form["name"]
+            productDescription = request.form["descp"]
+            productPrice = int(request.form["price"])
+            productSeller = request.form["seller"]
+            productImg = request.form["img"]
+            productSpec = request.form["spec"]
+            newProductID = all_items[1][len(all_items[1]) - 1]["itemID"] + 1
+            newProduct = {
+                "itemID": newProductID,
+                "itemName": productName,
+                "description": productDescription,
+                "price": productPrice,
+                "seller": productSeller,
+                "image": productImg,
+                "spec": productSpec,
+                "ratings": [],
+                "reviews": [],
+                "rating": 0
+            }
+            categories.update_one(
+                {
+                    "_id": 1
+                },
+                {
+                    "$push": {
+                        "$items": newProduct
+                    }
+                }
+            )
+            return redirect(url_for("index"))
+    return redirect(url_for("index"))
+            
 
 def addProductHelper(categoryID, newProduct):
     global all_items, categories
