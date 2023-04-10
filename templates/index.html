@@ -1,260 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <title>
-            Gökçwnify
-        </title>
-        <style type="text/css">
-            .container {
-                width: 100vw;
-                float: left;
-            }
-            .container > nav{
-                width: 100vw;
-                margin-left: -1.5%;
-                border-color: #f44336 !important;
-                border-bottom: 1px solid #ccc !important;
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-            }
-            .container > nav > a{
-                margin-left: 2%;
-            }
-            .container > nav > *{
-                margin-left: 30%;
-            }
-            .products {
-                width: 90vw;
-                margin-left: 10%;
-                margin-top: 2%;
-            }
-            .products > div > fieldset {
-                height: 22vh;
-            }
-            .list-group{
-                background-color: black;
-            }
-            .list-group-item{
-                background-color: rgba(0, 0, 0, 0.25);
-            }
+    <title>Gökçwnify</title>
 
-            .list-group-item > p{
-                color: whitesmoke;
-                font-size: large;
-                padding: 2px
-            }
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-            .img-thumbnail{
-                width: 75px;
-                height: 75px;
-                margin-left: 15%;
-                background-color: #ccc;
-            }
-            @media (max-width: 300px) {
-                .carosel-item {
-                    width: 100%;
-                }
-            }
-            @media (min-width: 300px) {
-                .carosel-item {
-                    width: 50%;
-                }
-            }
-            @media (min-width: 500px) {
-                .carosel-item {
-                    width: 33.333%;
-                }
-            }
-            @media (min-width: 768px) {
-                .carosel-item {
-                    width: 25%;
-                }
-            }
-            .carosel {
-                position: relative;
-            }
-            .carosel-inner {
-                white-space: nowrap;
-                overflow: hidden;
-                font-size: 0;
-                margin-left: 125px;
-                flex-wrap: wrap;
-            }
-            .carosel-item {
-                display: inline-block;
-                height: 125px;
-                width: 125px;
-            }
-            .carosel-control {
-                position: absolute;
-                top: 50%;
-                padding: 15px;
-                box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.5);
-                transform: translateY(-50%);
-                border-radius: 50%;
-                color: rgba(0, 0, 0, 0.5);
-                font-size: 30px;
-                display: inline-block;
-            }
-            .carosel-control-left {
-                left: 15px;
-            }
-            .carosel-control-right {
-                right: 15px;
-            }
-            .carosel-control:active,
-            .carosel-control:hover {
-                text-decoration: none;
-                color: rgba(0, 0, 0, 0.8);
-            }
-            .carosel-item-link{
-                height: 150px;
-                width: 150px;
-                margin-left: 25px;
-            }
-            .carosel-items{
-                width: 150px;
-                height: 150px;
-                display: inline-block;
-                position: relative;
-                margin-left: 25px;
-            }
-            .limited{
-                width: 25px;
-                word-wrap: break-word;
-                overflow-wrap: break-word;
-            }
-        </style>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    </head>
-    <body>
-        <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a class="navbar-brand" href="{{ url_for('index') }}">Gökçwnify</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-    
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <div class="horizontalgap" style="width:50vw"></div>
-                        {% if session.loggedIn %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="#"> {{ session.username }} </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ url_for('logout') }}"> Log Out </a>
-                            </li>
-                        {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="#"> Sign In </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ url_for('login') }}"> Log In </a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </nav>
+    <style>
+        a {
+            text-decoration: none !important;
+        }
+        .card-img-top{
+            width: 100%;
+            height: 225px;
+        }
+        .horizontal-divider{
+            width: 1%;
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            padding: 58px 0 0; /* Height of navbar */
+            box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+            width: 6%;
+            z-index: 600;
+        }
+    </style>
 
-            <div class="products">
-                <div class="clothing">
-                    <fieldset class="border p-2">
-                        <legend  class="float-none w-auto"> Clothing </legend>
-                        <div class="carosel" id="carosel1">
-                            <a class="carosel-control carosel-control-left glyphicon glyphicon-chevron-left" href="#"></a>
-                            <div class="carosel-inner">
-                                {% for item in clothings %}
-                                    <div class="carosel-items">
-                                        <a class="carosel-item-link" href="{{ url_for('product', product = item.itemID, categoryID = 0) }}">
-                                            <img class="carosel-item" src="{{ item.image }}" />
-                                            <div class="limited">
-                                                <p class="lead"> {{ item.itemName }} </p>
-                                            </div>
-                                        </a>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                            <a class="carosel-control carosel-control-right glyphicon glyphicon-chevron-right" href="#"></a>
-                          </div>
-                    </fieldset>                     
-                </div>
-                <div class="computerComponents">
-                    <fieldset class="border p-2">
-                        <legend  class="float-none w-auto"> Computer Components </legend>
-                        <div class="carosel" id="carosel1">
-                            <a class="carosel-control carosel-control-left glyphicon glyphicon-chevron-left" href="#"></a>
-                            <div class="carosel-inner">
-                                {% for item in computerComponents %}
-                                    <div class="carosel-items">
-                                        <a class="carosel-item-link" href="{{ url_for('product', product = item.itemID, categoryID = 1) }}">
-                                            <img class="carosel-item" src="{{ item.image }}" />
-                                            <div class="limited">
-                                                <p class="lead"> {{ item.itemName }} </p>
-                                            </div>
-                                        </a>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                            <a class="carosel-control carosel-control-right glyphicon glyphicon-chevron-right" href="#"></a>
-                          </div>
-                     </fieldset>
-                </div>
-                <div class="monitors">
-                    <fieldset class="border p-2">
-                        <legend  class="float-none w-auto"> Monitors </legend>
-                        <div class="carosel" id="carosel1">
-                            <a class="carosel-control carosel-control-left glyphicon glyphicon-chevron-left" href="#"></a>
-                            <div class="carosel-inner">
-                                {% for item in monitors %}
-                                    <div class="carosel-items">
-                                        <a class="carosel-item-link" href="{{ url_for('product', product = item.itemID, categoryID = 2) }}">
-                                            <img class="carosel-item" src="{{ item.image }}" />
-                                            <div class="limited">
-                                                <p class="lead"> {{ item.itemName }} </p>
-                                            </div>
-                                        </a>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                            <a class="carosel-control carosel-control-right glyphicon glyphicon-chevron-right" href="#"></a>
-                          </div>
-                     </fieldset>
-                </div>
-                <div class="snacks">
-                    <fieldset class="border p-2">
-                        <legend  class="float-none w-auto"> Snacks </legend>
-                        <div class="carosel" id="carosel1">
-                            <a class="carosel-control carosel-control-left glyphicon glyphicon-chevron-left" href="#"></a>
-                            <div class="carosel-inner">
-                                {% for item in snacks %}
-                                    <div class="carosel-items">
-                                        <a class="carosel-item-link" href="{{ url_for('product', product = item.itemID, categoryID = 3) }}">
-                                            <img class="carosel-item" src="{{ item.image }}" />
-                                            <div class="limited">
-                                                <p class="lead"> {{ item.itemName }} </p>
-                                            </div>
-                                        </a>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                            <a class="carosel-control carosel-control-right glyphicon glyphicon-chevron-right" href="#"></a>
-                          </div>
-                     </fieldset>
-                </div>
+  </head>
+
+  <body>
+
+    <header>
+      <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-dark">
+        <div class="position-sticky">
+            <div class="mx-3 mt-4 bg-dark text-center">
+                <span class="mt-1 mb-5 pb-1" style="font-size: 15px; color: red;"> Categories </span>
+                <a href="{{ url_for('index', categoryID = 0) }}" class="text-light" style="font-size: 12px; font-weight: bold;"> Clothings </a>
+                <a href="{{ url_for('index', categoryID = 1) }}" class="text-light" style="font-size: 12px; font-weight: bold;"> Computer Components </a>
+                <a href="{{ url_for('index', categoryID = 2) }}" class="text-light" style="font-size: 12px; font-weight: bold;"> Monitors </a>
+                <a href="{{ url_for('index', categoryID = 3) }}" class="text-light" style="font-size: 12px; font-weight: bold;"> Snacks </a>
             </div>
         </div>
-        <script>
-            $('.carosel-control-right').click(function() {
-            $(this).blur();
-            $(this).parent().find('.carosel-items').first().insertAfter($(this).parent().find('.carosel-items').last());
-            });
-            $('.carosel-control-left').click(function() {
-            $(this).blur();
-            $(this).parent().find('.carosel-items').last().insertBefore($(this).parent().find('.carosel-items').first());
-            });
-        </script>
-    </body>
+      </nav>
+      <!-- Fixed navbar -->
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="{{ url_for('index') }}">Gökçwnify</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+            </li>
+          </ul>
+          {% if session.loggedIn %}
+            <a class="btn btn-outline-success my-2 my-sm-0" href="#"> {{ session.username }} </a>
+            <div class="horizontal-divider">  </div>
+            <a class="btn btn-outline-success my-2 my-sm-0" href="{{ url_for('logout') }}"> Log Out </a>
+          {% else %}
+            <a class="btn btn-outline-success my-2 my-sm-0" href="{{ url_for('login') }}"> Log In </a>
+          {% endif %}
+        </div>
+      </nav>
+    
+    </header>
+
+    <main role="main">
+      
+      <div class="album py-5 bg-light" style="margin-top: 2%;">
+        <div class="container">
+          <div class="row">
+            {% for item in items %}
+                <div class="col-md-4">
+                    <div class="card mb-4 box-shadow">
+                        <img class="card-img-top" alt="{{ item.itemName }}" style="height: 225px; width: 100%; display: block;" src="{{ item.image }}" data-holder-rendered="true">
+                        <div class="card-body">
+                            <p class="card-text text-center" style="font-weight:bold;"> {{ item.itemName }} </p>
+                            <p class="card-text" style="font-weight: bold; font-size: 13px;"> Seller: <span> {{ item.seller }} </span></p>
+                            <p class="card-text" style="font-weight: bold; font-size: 13px;"> Price: <span> {{ item.price }} </span></p>
+                            <p class="card-text" style="font-weight: bold; font-size: 13px;"> Rating: <span> {{ item.rating }} </span></p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a  class="btn btn-sm btn-outline-secondary" href="#">View</a>
+                                    {% if session.loggedIn && session.role == "Admin" %}
+                                        <a class="btn btn-sm btn-outline-secondary" href="#">Edit</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+    </main>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+</body>
 </html>
