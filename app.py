@@ -111,7 +111,7 @@ def profile():
             if product["itemID"] == productID:
                 productName = product["itemName"]
                 break
-        reviews.append("productName": productName, "reviewText": review["reviewText"])
+        reviews.append({"productName": productName, "reviewText": review["reviewText"]})
     return render_template("profile.html", avgRating = avgRating, totalReviews = totalReviews, userReviews = reviews)
 
 @app.route("/product", methods = ("GET", "POST"))
