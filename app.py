@@ -180,7 +180,7 @@ def addProduct():
                 },
                 {
                     "$push": {
-                        "$items": newProduct
+                        "items": newProduct
                     }
                 }
             )
