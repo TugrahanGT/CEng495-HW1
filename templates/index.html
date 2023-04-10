@@ -78,29 +78,57 @@
       <div class="album py-5 bg-light" style="margin-top: 2%;">
         <div class="container">
           <div class="row">
-            {% for item in clothings %}
-                <div class="col-md-4">
-                    <div class="card mb-4 box-shadow">
-                        <img class="card-img-top" alt="{{ item.itemName }}" style="height: 225px; width: 100%; display: block;" src="{{ item.image }}" data-holder-rendered="true">
-                        <div class="card-body">
-                            <p class="card-text text-center" style="font-weight:bold;"> {{ item.itemName }} </p>
-                            <p class="card-text" style="font-weight: bold; font-size: 13px;"> Seller: <span> {{ item.seller }} </span></p>
-                            <p class="card-text" style="font-weight: bold; font-size: 13px;"> Price: <span> {{ item.price }} </span></p>
-                            <p class="card-text" style="font-weight: bold; font-size: 13px;"> Rating: <span> {{ item.rating }} </span></p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a  class="btn btn-sm btn-outline-secondary" href="#">View</a>
-                                    {% if session.loggedIn%}
-                                      {% if session.role == "Admin" %}
-                                        <a class="btn btn-sm btn-outline-secondary" href="#">Edit</a>
-                                      {% endif %}
-                                    {% endif %}
+            {% if categoryID == -1 %}
+              {% for categories in items %}
+                {% for item in categories %}
+                    <div class="col-md-4">
+                        <div class="card mb-4 box-shadow">
+                            <img class="card-img-top" alt="{{ item.itemName }}" style="height: 225px; width: 100%; display: block;" src="{{ item.image }}" data-holder-rendered="true">
+                            <div class="card-body">
+                                <p class="card-text text-center" style="font-weight:bold;"> {{ item.itemName }} </p>
+                                <p class="card-text" style="font-weight: bold; font-size: 13px;"> Seller: <span> {{ item.seller }} </span></p>
+                                <p class="card-text" style="font-weight: bold; font-size: 13px;"> Price: <span> {{ item.price }} </span></p>
+                                <p class="card-text" style="font-weight: bold; font-size: 13px;"> Rating: <span> {{ item.rating }} </span></p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a  class="btn btn-sm btn-outline-secondary" href="#">View</a>
+                                        {% if session.loggedIn%}
+                                          {% if session.role == "Admin" %}
+                                            <a class="btn btn-sm btn-outline-secondary" href="#">Edit</a>
+                                          {% endif %}
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+              {% endfor %}
+            {% else %}
+              {% for item in items[categoryID] %}
+                  <div class="col-md-4">
+                      <div class="card mb-4 box-shadow">
+                          <img class="card-img-top" alt="{{ item.itemName }}" style="height: 225px; width: 100%; display: block;" src="{{ item.image }}" data-holder-rendered="true">
+                          <div class="card-body">
+                              <p class="card-text text-center" style="font-weight:bold;"> {{ item.itemName }} </p>
+                              <p class="card-text" style="font-weight: bold; font-size: 13px;"> Seller: <span> {{ item.seller }} </span></p>
+                              <p class="card-text" style="font-weight: bold; font-size: 13px;"> Price: <span> {{ item.price }} </span></p>
+                              <p class="card-text" style="font-weight: bold; font-size: 13px;"> Rating: <span> {{ item.rating }} </span></p>
+                              <div class="d-flex justify-content-between align-items-center">
+                                  <div class="btn-group">
+                                      <a  class="btn btn-sm btn-outline-secondary" href="#">View</a>
+                                      {% if session.loggedIn%}
+                                        {% if session.role == "Admin" %}
+                                          <a class="btn btn-sm btn-outline-secondary" href="#">Edit</a>
+                                        {% endif %}
+                                      {% endif %}
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              {% endfor %}
+            {% endif %}
           </div>
         </div>
       </div>
