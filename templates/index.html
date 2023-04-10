@@ -90,8 +90,10 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <a  class="btn btn-sm btn-outline-secondary" href="#">View</a>
-                                    {% if session.loggedIn and session.role == "Admin" %}
+                                    {% if session.loggedIn%}
+                                      {% if session.role == "Admin" %}
                                         <a class="btn btn-sm btn-outline-secondary" href="#">Edit</a>
+                                      {% endif %}
                                     {% endif %}
                                 </div>
                             </div>
