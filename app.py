@@ -260,7 +260,7 @@ def deleteRevRateFromUser(reviewList, ratingList, productID, categoryID, userID)
 def add_review(username, reviewText, productID, categoryID):
     global all_items, categories
     reviewList = all_items[categoryID][productID]["reviews"]
-    idx, flag = 0, False
+    idx, flag, reviewID = 0, False, None
     for review in reviewList:
         if review["author"] == username:
             flag = True
@@ -268,6 +268,7 @@ def add_review(username, reviewText, productID, categoryID):
         idx += 1
     if flag:
         all_items[categoryID][productID]["reviews"][idx]["reviewText"] = reviewText
+        reviewID = all_items[categoryID][productID]["reviews"][idx]["reviewID"]
         categories.update_one(
             {
                 "_id": categoryID,
@@ -282,6 +283,7 @@ def add_review(username, reviewText, productID, categoryID):
     else:
         lastReviewID = reviewList[len(reviewList) - 1]["reviewID"]
         newReview = {"reviewID": lastReviewID + 1, "reviewText": reviewText, "author": username}
+        reviewID = lastReviewID + 1
         categories.update_one(
             {
                 "_id": categoryID,
@@ -293,12 +295,13 @@ def add_review(username, reviewText, productID, categoryID):
                 }
             }
         )
+    addReviewUser(productID, categoryID, reviewID, reviewText, username)
     return True
 
 def add_rating(username, rating, productID, categoryID):
     global all_items, categories
     ratingList = all_items[categoryID][productID]["ratings"]
-    idx, flag, totalRating = 0, False, 0
+    idx, flag, totalRating, ratingID = 0, False, 0, 0
     for ratings in ratingList:
         if ratings["author"] == username:
             flag = True
@@ -310,6 +313,7 @@ def add_rating(username, rating, productID, categoryID):
         for ratings in ratingList:
             totalRating += ratings["rating"]
         avgRating = totalRating / ratingCount
+        ratingID = all_items[categoryID][productID]["ratings"][idx]["ratingID"]
         categories.update_one(
             {
                 "_id": categoryID,
@@ -329,6 +333,7 @@ def add_rating(username, rating, productID, categoryID):
             totalRating += ratings["rating"]
         avgRating = (totalRating + rating) / (ratingCount + 1)
         newRating = {"ratingID": lastRatingID + 1, "rating": rating, "author": username}
+        ratingID = lastRatingID + 1
         categories.update_one(
             {
                 "_id": categoryID,
@@ -340,6 +345,92 @@ def add_rating(username, rating, productID, categoryID):
                 },
                 "$set": {
                     "items.$.rating": avgRating            
+                }
+            }
+        )
+    addRatingUser(productID, categoryID, ratingID, rating, username)
+    return True
+
+def addReviewUser(productID, categoryID, reviewID, reviewText, username):
+    global users
+    allUsers = list(users.find())
+    reviewList = allUsers[username]["reviews"]
+    idx, flag = 0, False
+    for review in reviewList:
+        if review["reviewID"] == reviewID:
+            flag = True
+            break
+        idx += 1
+    if flag:
+        allUsers[username]["reviews"][idx]["reviewText"] = reviewText
+        users.update_one(
+            {
+                "username": username
+            },
+            {
+                "$set": {
+                    "reviews": allUsers[username]["reviews"]
+                }
+            }
+        )
+    else:
+        lastReviewID = reviewList[len(reviewList) - 1]["reviewID"]
+        newReview = {"reviewID": lastReviewID + 1, "productID": productID, "reviewText": reviewText, "categoryID": categoryID}
+        users.update_one(
+            {
+                "username": username
+            },
+            {
+                "$push": {
+                    "reviews": newReview
+                }
+            }
+        )
+    return True
+
+def addRatingUser(productID, categoryID, ratingID, rating, username):
+    global users
+    allUsers = list(users.find())
+    ratingList = allUsers[username]["ratings"]
+    idx, flag, totalRating = 0, False, 0
+    for ratingElement in ratingList:
+        if ratingElement["ratingID"] == ratingID:
+            flag = True
+            break
+        idx += 1
+    if flag:
+        allUsers[username]["ratings"][idx]["rating"] = rating
+        for ratingElement in ratingList:
+            totalRating += ratingElement["rating"]
+        totalRating = totalRating / len(ratingList)
+        users.update_one(
+            {
+                "username": username
+            },
+            {
+                "$set": {
+                    "ratings": allUsers[username]["ratings"],
+                    "avgRating": totalRating
+                }
+            }
+        )
+    else:
+        lastReviewID = ratingList[len(ratingList) - 1]["ratingID"]
+        newRating = {"ratingID": lastReviewID + 1, "rating": rating, "productID": productID, "categoryID": categoryID}
+        for ratingElement in ratingList:
+            totalRating += ratingElement["rating"]
+        totalRating += rating
+        totalRating = totalRating / (len(ratingList) + 1)
+        users.update_one(
+            {
+                "username": username
+            },
+            {
+                "$push": {
+                    "ratings": newRating
+                },
+                "$set": {
+                    "avgRating": totalRating
                 }
             }
         )
