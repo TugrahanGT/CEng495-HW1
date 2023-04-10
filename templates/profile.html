@@ -140,7 +140,7 @@
                     <div class="col-md-12">
                       <div class="card mb-4 mb-md-0">
                         <div class="card-body">
-                          <form action="{{ url_for('addProduct', categoryID = 0) }}"id="clothingForm" style="display: none;">
+                          <form action="{{ url_for('addProduct', categoryID = 0) }}"id="clothingForm" style="display: none;" method="post">
                               <div class="row mb-4">
                                 <div class="col">
                                     <div class="form-outline">
@@ -199,7 +199,7 @@
                           </form>
 
                           
-                          <form action="{{ url_for('addProduct', categoryID = 1) }}"id="ccForm" style="display: none;">
+                          <form action="{{ url_for('addProduct', categoryID = 1) }}" id="ccForm" style="display: none;" method="post">
                             <div class="row mb-4">
                               <div class="col">
                                   <div class="form-outline">
@@ -252,7 +252,7 @@
                         </form>
 
                         
-                        <form action="{{ url_for('addProduct', categoryID = 2) }}"id="monitorForm" style="display: none;">
+                        <form action="{{ url_for('addProduct', categoryID = 2) }}"id="monitorForm" style="display: none;" method="post">
                             <div class="row mb-4">
                               <div class="col">
                                   <div class="form-outline">
@@ -305,7 +305,7 @@
                         </form>
 
                         
-                        <form action="{{ url_for('addProduct', categoryID = 3) }}"id="snackForm" style="display: none;">
+                        <form action="{{ url_for('addProduct', categoryID = 3) }}"id="snackForm" style="display: none;" method="post">
                             <div class="row mb-4">
                               <div class="col">
                                   <div class="form-outline">
