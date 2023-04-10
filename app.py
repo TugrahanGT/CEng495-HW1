@@ -354,12 +354,12 @@ def add_rating(username, rating, productID, categoryID):
 def addReviewUser(productID, categoryID, reviewID, reviewText, username):
     global users
     allUsers = list(users.find())
-    idx = 0
+    idxUser = 0
     for user in allUsers:
         if user["username"] == username:
             break
-        idx += 1
-    reviewList = allUsers[idx]["reviews"]
+        idxUser += 1
+    reviewList = allUsers[idxUser]["reviews"]
     idx, flag = 0, False
     for review in reviewList:
         if review["reviewID"] == reviewID:
@@ -367,14 +367,14 @@ def addReviewUser(productID, categoryID, reviewID, reviewText, username):
             break
         idx += 1
     if flag:
-        allUsers[idx]["reviews"]["reviewText"] = reviewText
+        allUsers[idxUser]["reviews"][idx]["reviewText"] = reviewText
         users.update_one(
             {
                 "username": username
             },
             {
                 "$set": {
-                    "reviews": allUsers[idx]["reviews"]
+                    "reviews": allUsers[idxUser]["reviews"]
                 }
             }
         )
@@ -396,12 +396,12 @@ def addReviewUser(productID, categoryID, reviewID, reviewText, username):
 def addRatingUser(productID, categoryID, ratingID, rating, username):
     global users
     allUsers = list(users.find())
-    idx = 0
+    idxUser = 0
     for user in allUsers:
         if user["username"] == username:
             break
-        idx += 1
-    ratingList = allUsers[idx]["ratings"]
+        idxUser += 1
+    ratingList = allUsers[idxUser]["ratings"]
     idx, flag, totalRating = 0, False, 0
     for ratingElement in ratingList:
         if ratingElement["ratingID"] == ratingID:
@@ -409,7 +409,7 @@ def addRatingUser(productID, categoryID, ratingID, rating, username):
             break
         idx += 1
     if flag:
-        allUsers[idx]["ratings"]["rating"] = rating
+        allUsers[idxUser]["ratings"][idx]["rating"] = rating
         for ratingElement in ratingList:
             totalRating += ratingElement["rating"]
         totalRating = totalRating / len(ratingList)
@@ -419,7 +419,7 @@ def addRatingUser(productID, categoryID, ratingID, rating, username):
             },
             {
                 "$set": {
-                    "ratings": allUsers[idx]["ratings"],
+                    "ratings": allUsers[idxUser]["ratings"],
                     "avgRating": totalRating
                 }
             }
