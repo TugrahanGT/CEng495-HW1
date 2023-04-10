@@ -183,6 +183,7 @@ def addProduct():
                 }
             }
         )
+        print("added")
         return redirect(url_for("index"))
     return redirect(url_for("index"))
             
