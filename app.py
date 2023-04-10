@@ -160,9 +160,7 @@ def addProduct():
         productSeller = request.form["seller"]
         productImg = request.form["img"]
         productSpec = request.form["spec"]
-        newProductID = all_items[1][len(all_items[1]) - 1]["itemID"] + 1
         newProduct = {
-            "itemID": newProductID,
             "itemName": productName,
             "description": productDescription,
             "price": productPrice,
@@ -173,17 +171,7 @@ def addProduct():
             "reviews": [],
             "rating": 0
         }
-        categories.update_one(
-            {
-                "_id": 1
-            },
-            {
-                "$push": {
-                    "items": newProduct
-                }
-            }
-        )
-        print("added")
+        addProductHelper(int(request.args.get("categoryID")), newProduct)
         return redirect(url_for("index"))
     return redirect(url_for("index"))
             
