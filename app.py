@@ -198,7 +198,6 @@ def addProductHelper(categoryID, newProduct):
     for item in updatedItem["items"]:
         all_items[categoryID].append(item)
 
-
 def deleteProductHelper(productID, categoryID):
     global all_items, categories
     deleteProductInfoFromUser(productID, categoryID)
@@ -381,6 +380,7 @@ def addReviewUser(productID, categoryID, reviewID, reviewText, username):
     else:
         lastReviewID = reviewList[len(reviewList) - 1]["reviewID"]
         newReview = {"reviewID": lastReviewID + 1, "productID": productID, "reviewText": reviewText, "categoryID": categoryID}
+        print(newReview)
         users.update_one(
             {
                 "username": username
@@ -431,6 +431,8 @@ def addRatingUser(productID, categoryID, ratingID, rating, username):
             totalRating += ratingElement["rating"]
         totalRating += rating
         totalRating = totalRating / (len(ratingList) + 1)
+        print(newRating)
+        print(totalRating)
         users.update_one(
             {
                 "username": username
