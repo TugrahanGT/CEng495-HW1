@@ -354,7 +354,12 @@ def add_rating(username, rating, productID, categoryID):
 def addReviewUser(productID, categoryID, reviewID, reviewText, username):
     global users
     allUsers = list(users.find())
-    reviewList = allUsers[username]["reviews"]
+    idx = 0
+    for user in allUsers:
+        if user["username"] == username:
+            break
+        idx += 1
+    reviewList = allUsers[username]["reviews"][idx]
     idx, flag = 0, False
     for review in reviewList:
         if review["reviewID"] == reviewID:
@@ -391,7 +396,12 @@ def addReviewUser(productID, categoryID, reviewID, reviewText, username):
 def addRatingUser(productID, categoryID, ratingID, rating, username):
     global users
     allUsers = list(users.find())
-    ratingList = allUsers[username]["ratings"]
+    idx = 0
+    for user in allUsers:
+        if user["username"] == username:
+            break
+        idx += 1
+    ratingList = allUsers[username]["ratings"][idx]
     idx, flag, totalRating = 0, False, 0
     for ratingElement in ratingList:
         if ratingElement["ratingID"] == ratingID:
