@@ -331,7 +331,9 @@ def add_review(username, reviewText, productID, categoryID):
             }
         )
     else:
-        lastReviewID = reviewList[len(reviewList) - 1]["reviewID"]
+        lastReviewID = -1
+        if len(reviewList) > 0:
+            lastReviewID = reviewList[len(reviewList) - 1]["reviewID"]
         newReview = {"reviewID": lastReviewID + 1, "reviewText": reviewText, "author": username}
         categories.update_one(
             {
@@ -375,7 +377,9 @@ def add_rating(username, rating, productID, categoryID):
             }
         )
     else:
-        lastRatingID = ratingList[len(ratingList) - 1]["ratingID"]
+        lastRatingID = -1
+        if len(ratingList) > 0:
+            lastRatingID = ratingList[len(ratingList) - 1]["ratingID"]
         ratingCount = len(ratingList)
         for ratings in ratingList:
             totalRating += ratings["rating"]
