@@ -63,7 +63,7 @@
             </li>
           </ul>
           {% if session.loggedIn %}
-            <a class="btn btn-outline-success my-2 my-sm-0" href="#"> {{ session.username }} </a>
+            <a class="btn btn-outline-success my-2 my-sm-0" href="{{ url_for('profile') }}"> {{ session.username }} </a>
             <div class="horizontal-divider">  </div>
             <a class="btn btn-outline-success my-2 my-sm-0" href="{{ url_for('logout') }}"> Log Out </a>
           {% else %}

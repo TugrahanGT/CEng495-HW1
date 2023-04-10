@@ -86,6 +86,34 @@ def logout():
     session["role"] = None
     return redirect(url_for("index"))
 
+@app.route("/profile", methods = ("GET", "POST"))
+def profile():
+    global users, all_items
+    if not session.get("username"):
+        return redirect(url_for("login"))
+    username = session["username"]
+    avgRating = 0
+    totalReviews = 0
+    reviewList = []
+    reviews = []
+    allUsers = list(users.find())
+    for user in allUsers:
+        if user["username"] == username:
+            avgRating = user["avgRating"]
+            reviewList = user["reviews"]
+            totalReviews = len(reviewList)
+            break
+    for review in reviewList:
+        categoryID = review["categoryID"]
+        productID = review["productID"]
+        productName = ""
+        for product in all_items[categoryID]:
+            if product["itemID"] == productID:
+                productName = product["itemName"]
+                break
+        reviews.append = {"productName": productName, "reviewText": review["reviewText"]}
+    return render_template("profile.html", avgRating = avgRating, totalReviews = totalReviews, userReviews = reviews)
+
 @app.route("/product", methods = ("GET", "POST"))
 def product():
     global all_items
@@ -240,9 +268,10 @@ def deleteRevRateFromUser(reviewList, ratingList, productID, categoryID, userID)
             ratingList = ratingList[:idx] + ratingList[idx + 1:]
             break
         idx += 1
-    for rating in ratingList:
-        totalRating += rating["rating"]
-    totalRating = totalRating / len(ratingList)
+    if ratingList:
+        for rating in ratingList:
+            totalRating += rating["rating"]
+        totalRating = totalRating / len(ratingList)
     users.update_one(
         {
             "_id": userID
