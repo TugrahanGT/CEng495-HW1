@@ -403,7 +403,9 @@ def addReviewUser(productID, categoryID, reviewText, username):
             }
         )
     else:
-        lastReviewID = reviewList[len(reviewList) - 1]["reviewID"]
+        lastReviewID = -1
+        if reviewList:
+            lastReviewID = reviewList[len(reviewList) - 1]["reviewID"]
         newReview = {"reviewID": lastReviewID + 1, "productID": productID, "reviewText": reviewText, "categoryID": categoryID}
         print(newReview)
         users.update_one(
@@ -451,14 +453,14 @@ def addRatingUser(productID, categoryID, rating, username):
             }
         )
     else:
-        lastReviewID = ratingList[len(ratingList) - 1]["ratingID"]
-        newRating = {"ratingID": lastReviewID + 1, "rating": rating, "productID": productID, "categoryID": categoryID}
+        lastRatingID = -1
+        if ratingList:
+            lastRatingID = ratingList[len(ratingList) - 1]["ratingID"]
+        newRating = {"ratingID": lastRatingID + 1, "rating": rating, "productID": productID, "categoryID": categoryID}
         for ratingElement in ratingList:
             totalRating += ratingElement["rating"]
         totalRating += rating
         totalRating = totalRating / (len(ratingList) + 1)
-        print(newRating)
-        print(totalRating)
         users.update_one(
             {
                 "username": username
