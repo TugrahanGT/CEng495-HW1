@@ -59,14 +59,15 @@ def login():
                 result = list(users.find({"username": username}))
                 if not result:
                     flash("Wrong password or username")
-                elif password != result["password"]:
-                    flash("Wrong password or username")
                 else:
                     result = result[0]
-                    session["loggedIn"] = True
-                    session["username"] = username
-                    session["role"] = result["role"]["type"]
-                    return redirect(url_for("index"))
+                    if password != result["password"]:
+                        flash("Wrong password or username")
+                    else:
+                        session["loggedIn"] = True
+                        session["username"] = username
+                        session["role"] = result["role"]["type"]
+                        return redirect(url_for("index"))
         return render_template("login.html")
     else:
         return redirect(url_for("index"))
