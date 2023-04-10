@@ -359,7 +359,7 @@ def addReviewUser(productID, categoryID, reviewID, reviewText, username):
         if user["username"] == username:
             break
         idx += 1
-    reviewList = allUsers[username]["reviews"][idx]
+    reviewList = allUsers[idx]["reviews"]
     idx, flag = 0, False
     for review in reviewList:
         if review["reviewID"] == reviewID:
@@ -367,14 +367,14 @@ def addReviewUser(productID, categoryID, reviewID, reviewText, username):
             break
         idx += 1
     if flag:
-        allUsers[username]["reviews"][idx]["reviewText"] = reviewText
+        allUsers[idx]["reviews"]["reviewText"] = reviewText
         users.update_one(
             {
                 "username": username
             },
             {
                 "$set": {
-                    "reviews": allUsers[username]["reviews"]
+                    "reviews": allUsers[idx]["reviews"]
                 }
             }
         )
@@ -401,7 +401,7 @@ def addRatingUser(productID, categoryID, ratingID, rating, username):
         if user["username"] == username:
             break
         idx += 1
-    ratingList = allUsers[username]["ratings"][idx]
+    ratingList = allUsers[idx]["ratings"]
     idx, flag, totalRating = 0, False, 0
     for ratingElement in ratingList:
         if ratingElement["ratingID"] == ratingID:
@@ -409,7 +409,7 @@ def addRatingUser(productID, categoryID, ratingID, rating, username):
             break
         idx += 1
     if flag:
-        allUsers[username]["ratings"][idx]["rating"] = rating
+        allUsers[idx]["ratings"]["rating"] = rating
         for ratingElement in ratingList:
             totalRating += ratingElement["rating"]
         totalRating = totalRating / len(ratingList)
@@ -419,7 +419,7 @@ def addRatingUser(productID, categoryID, ratingID, rating, username):
             },
             {
                 "$set": {
-                    "ratings": allUsers[username]["ratings"],
+                    "ratings": allUsers[idx]["ratings"],
                     "avgRating": totalRating
                 }
             }
