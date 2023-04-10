@@ -175,10 +175,11 @@ def addProduct():
         return redirect(url_for("index"))
     return redirect(url_for("index"))
             
-
 def addProductHelper(categoryID, newProduct):
     global all_items, categories
-    newItemID = all_items[categoryID][len(all_items[categoryID]) - 1]["itemID"] + 1
+    newItemID = 0
+    if len(all_items[categoryID]) > 0:
+        newItemID = all_items[categoryID][len(all_items[categoryID]) - 1]["itemID"] + 1
     newProductProcessed = None
     if categoryID == 0:
         newProductProcessed = {
