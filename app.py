@@ -115,12 +115,147 @@ def product():
     categoryID = int(request.args.get("categoryID"))
     return render_template("product.html", item = all_items[categoryID][productID], categoryID = categoryID)
 
-@app.route("/delete", methods = ("GET", "POST"))
-def delete():
+@app.route("/deleteProduct", methods = ("GET", "POST"))
+def deleteProduct():
     productID = int(request.args.get("product"))
     categoryID = int(request.args.get("categoryID"))
-    print(productID, categoryID)
+    deleteProductHelper(productID, categoryID)
     return redirect(url_for("index"))
+
+@app.route("/addProduct", methods = ("GET", "POST"))
+def addProduct():
+    pass
+
+def addProductHelper(categoryID, newProduct):
+    global all_items, categories
+    newItemID = all_items[categoryID][len(all_items[categoryID]) - 1]["itemID"] + 1
+    newProductProcessed = None
+    if categoryID == 0:
+        newProductProcessed = {
+            "itemID": newItemID,
+            "itemName": newProduct["itemName"],
+            "description": newProduct["description"],
+            "price": newProduct["price"],
+            "seller": newProduct["seller"],
+            "image": newProduct["image"],
+            "size": newProduct["size"],
+            "colour": newProduct["colour"],
+            "rating": 0,
+            "ratings": [],
+            "reviews": []
+        }
+    elif categoryID == 1:
+        newProductProcessed = {
+            "itemID": newItemID,
+            "itemName": newProduct["itemName"],
+            "description": newProduct["description"],
+            "price": newProduct["price"],
+            "seller": newProduct["seller"],
+            "image": newProduct["image"],
+            "rating": 0,
+            "ratings": [],
+            "reviews": [],
+            "spec": newProduct["spec"]
+        }
+    elif categoryID == 2:
+        newProductProcessed = {
+            "itemID": newItemID,
+            "itemName": newProduct["itemName"],
+            "description": newProduct["description"],
+            "price": newProduct["price"],
+            "seller": newProduct["seller"],
+            "image": newProduct["image"],
+            "rating": 0,
+            "ratings": [],
+            "reviews": [],
+            "spec": newProduct["spec"]
+        }
+    else:
+        newProductProcessed = {
+            "itemID": newItemID,
+            "itemName": newProduct["itemName"],
+            "description": newProduct["description"],
+            "price": newProduct["price"],
+            "seller": newProduct["seller"],
+            "image": newProduct["image"],
+            "rating": 0,
+            "ratings": [],
+            "reviews": []
+        }
+    categories.update_one(
+        {
+            "_id": categoryID
+        },
+        {
+            "$push": {
+                "items": newProductProcessed
+            }
+        }
+    )
+    categoriesList = list(categories.find())
+    updatedItem = categoriesList[categoryID]
+    all_items[categoryID] = []
+    for item in updatedItem["items"]:
+        all_items[categoryID].append(item)
+
+
+def deleteProductHelper(productID, categoryID):
+    global all_items, categories
+    deleteProductInfoFromUser(productID, categoryID)
+    idx = 0
+    for product in all_items[categoryID]:
+        if product["itemID"] == productID:
+            all_items[categoryID] = all_items[categoryID][:idx] + all_items[categoryID][idx + 1:]
+            break
+        idx += 1
+    categories.update_one(
+        {
+            "_id": categoryID
+        },
+        {
+            "$set": {
+                "items": all_items[categoryID]
+            }
+        }
+    )
+
+def deleteProductInfoFromUser(productID, categoryID):
+    global users
+    allUsers = list(users.find())
+    for user in allUsers:
+        reviewList = user["reviews"]
+        ratingList = user["ratings"]
+        deleteRevRateFromUser(reviewList, ratingList, productID, categoryID, user["_id"])
+
+def deleteRevRateFromUser(reviewList, ratingList, productID, categoryID, userID):
+    global users
+    idx = 0
+    for review in reviewList:
+        if review["itemID"] == productID and review["categoryID"] == categoryID:
+            reviewList = reviewList[:idx] + reviewList[idx + 1:]
+            break
+        idx += 1
+    idx, totalRating = 0, 0
+    for rating in ratingList:
+        if rating["itemID"] == productID and rating["categoryID"] == categoryID:
+            ratingList = ratingList[:idx] + ratingList[idx + 1:]
+            break
+        idx += 1
+    for rating in ratingList:
+        totalRating += rating["rating"]
+    totalRating = totalRating / len(ratingList)
+    users.update_one(
+        {
+            "_id": userID
+        },
+        {
+            "$set": {
+                "reviews": reviewList,
+                "ratings": ratingList,
+                "avgRating": totalRating
+            }
+        }
+    )
 
 def add_review(username, reviewText, productID, categoryID):
     global all_items, categories

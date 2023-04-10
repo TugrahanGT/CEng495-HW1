@@ -17,6 +17,7 @@
         .card-img-top{
             width: 225px;
             height: 225px;
+            margin-left: 25%;
         }
         .horizontal-divider{
             width: 1%;
@@ -94,7 +95,7 @@
                                         <a  class="btn btn-sm btn-outline-secondary" href="{{ url_for('product', product = item.itemID, categoryID = category[0]) }}">View</a>
                                         {% if session.loggedIn%}
                                           {% if session.role == "Admin" %}
-                                            <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('delete', product = item.itemID, categoryID = category[0]) }}" style="color: red;">Delete</a>
+                                            <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('deleteProduct', product = item.itemID, categoryID = category[0]) }}" style="color: red;">Delete</a>
                                           {% endif %}
                                         {% endif %}
                                     </div>
@@ -119,7 +120,7 @@
                                       <a  class="btn btn-sm btn-outline-secondary" href="{{ url_for('product', product = item.itemID, categoryID = categoryID) }}">View</a>
                                       {% if session.loggedIn%}
                                         {% if session.role == "Admin" %}
-                                          <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('delete', product = item.itemID, categoryID = categoryID) }}" style="color: red;">Delete</a>
+                                          <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('deleteProduct', product = item.itemID, categoryID = categoryID) }}" style="color: red;">Delete</a>
                                         {% endif %}
                                       {% endif %}
                                   </div>
