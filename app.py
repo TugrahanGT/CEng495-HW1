@@ -51,6 +51,7 @@ def index():
         return render_template("index.html", items = all_items, categoryID = -1)
     else:
         return render_template("index.html", items = all_items, categoryID = -1)
+    
 @app.route("/login/", methods = ("GET", "POST"))
 def login():
     if not session.get("username"):
@@ -113,6 +114,13 @@ def product():
     productID = int(request.args.get("product"))
     categoryID = int(request.args.get("categoryID"))
     return render_template("product.html", item = all_items[categoryID][productID], categoryID = categoryID)
+
+@app.route("/delete", methods = ("GET", "POST"))
+def delete():
+    productID = int(request.args.get("product"))
+    categoryID = int(request.args.get("categoryID"))
+    print(productID, categoryID)
+    return redirect(url_for("index"))
 
 def add_review(username, reviewText, productID, categoryID):
     global all_items, categories
