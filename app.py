@@ -259,7 +259,7 @@ def deleteRevRateFromUser(reviewList, ratingList, productID, categoryID, userID)
 def add_review(username, reviewText, productID, categoryID):
     global all_items, categories
     reviewList = all_items[categoryID][productID]["reviews"]
-    idx, flag, reviewID = 0, False, None
+    idx, flag = 0, False
     for review in reviewList:
         if review["author"] == username:
             flag = True
@@ -267,7 +267,6 @@ def add_review(username, reviewText, productID, categoryID):
         idx += 1
     if flag:
         all_items[categoryID][productID]["reviews"][idx]["reviewText"] = reviewText
-        reviewID = all_items[categoryID][productID]["reviews"][idx]["reviewID"]
         categories.update_one(
             {
                 "_id": categoryID,
@@ -282,7 +281,6 @@ def add_review(username, reviewText, productID, categoryID):
     else:
         lastReviewID = reviewList[len(reviewList) - 1]["reviewID"]
         newReview = {"reviewID": lastReviewID + 1, "reviewText": reviewText, "author": username}
-        reviewID = lastReviewID + 1
         categories.update_one(
             {
                 "_id": categoryID,
@@ -294,13 +292,13 @@ def add_review(username, reviewText, productID, categoryID):
                 }
             }
         )
-    addReviewUser(productID, categoryID, reviewID, reviewText, username)
+    addReviewUser(productID, categoryID, reviewText, username)
     return True
 
 def add_rating(username, rating, productID, categoryID):
     global all_items, categories
     ratingList = all_items[categoryID][productID]["ratings"]
-    idx, flag, totalRating, ratingID = 0, False, 0, 0
+    idx, flag, totalRating = 0, False, 0
     for ratings in ratingList:
         if ratings["author"] == username:
             flag = True
@@ -312,7 +310,6 @@ def add_rating(username, rating, productID, categoryID):
         for ratings in ratingList:
             totalRating += ratings["rating"]
         avgRating = totalRating / ratingCount
-        ratingID = all_items[categoryID][productID]["ratings"][idx]["ratingID"]
         categories.update_one(
             {
                 "_id": categoryID,
@@ -332,7 +329,6 @@ def add_rating(username, rating, productID, categoryID):
             totalRating += ratings["rating"]
         avgRating = (totalRating + rating) / (ratingCount + 1)
         newRating = {"ratingID": lastRatingID + 1, "rating": rating, "author": username}
-        ratingID = lastRatingID + 1
         categories.update_one(
             {
                 "_id": categoryID,
@@ -347,10 +343,10 @@ def add_rating(username, rating, productID, categoryID):
                 }
             }
         )
-    addRatingUser(productID, categoryID, ratingID, rating, username)
+    addRatingUser(productID, categoryID, rating, username)
     return True
 
-def addReviewUser(productID, categoryID, reviewID, reviewText, username):
+def addReviewUser(productID, categoryID, reviewText, username):
     global users
     allUsers = list(users.find())
     idxUser = 0
@@ -361,7 +357,7 @@ def addReviewUser(productID, categoryID, reviewID, reviewText, username):
     reviewList = allUsers[idxUser]["reviews"]
     idx, flag = 0, False
     for review in reviewList:
-        if review["reviewID"] == reviewID:
+        if review["categoryID"] == categoryID and review["productID"] == productID:
             flag = True
             break
         idx += 1
@@ -393,7 +389,7 @@ def addReviewUser(productID, categoryID, reviewID, reviewText, username):
         )
     return True
 
-def addRatingUser(productID, categoryID, ratingID, rating, username):
+def addRatingUser(productID, categoryID, rating, username):
     global users
     allUsers = list(users.find())
     idxUser = 0
@@ -403,8 +399,9 @@ def addRatingUser(productID, categoryID, ratingID, rating, username):
         idxUser += 1
     ratingList = allUsers[idxUser]["ratings"]
     idx, flag, totalRating = 0, False, 0
+    print(categoryID)
     for ratingElement in ratingList:
-        if ratingElement["ratingID"] == ratingID:
+        if ratingElement["categoryID"] == categoryID and ratingElement["productID"] == productID:
             flag = True
             break
         idx += 1
