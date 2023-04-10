@@ -229,6 +229,7 @@ def deleteProductInfoFromUser(productID, categoryID):
 def deleteRevRateFromUser(reviewList, ratingList, productID, categoryID, userID):
     global users
     idx = 0
+    print("imhere")
     for review in reviewList:
         if review["itemID"] == productID and review["categoryID"] == categoryID:
             reviewList = reviewList[:idx] + reviewList[idx + 1:]
@@ -243,6 +244,7 @@ def deleteRevRateFromUser(reviewList, ratingList, productID, categoryID, userID)
     for rating in ratingList:
         totalRating += rating["rating"]
     totalRating = totalRating / len(ratingList)
+    print("imhere2")
     users.update_one(
         {
             "_id": userID
