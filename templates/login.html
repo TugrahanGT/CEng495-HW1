@@ -48,21 +48,21 @@
                             <h4 class="mt-1 mb-5 pb-1">Gökçwnify</h4>
                           </div>
           
+                          {% with messages = get_flashed_messages() %}
+                          {% if messages %}
+                            <h4 style="color: red;">
+                                    {% for message in messages %}
+                                      {{ message }}
+                                  {% endfor %}
+                            </label>
+                          {% endif %}
+                          {% endwith %}
                           <form action="{{ url_for('login') }}" method="post">
           
                             <div class="form-outline mb-4">
                               <input type="text" name="username" id="form2Example11" class="form-control"
                                 placeholder="Enter your username" />
                               <label class="form-label" for="form2Example11">Username</label>
-                              {% with messages = get_flashed_messages() %}
-                                {% if messages %}
-                              <label class="form-label" for = "form2Example11">
-                                      {% for message in messages %}
-                                        {{ message }}
-                                      {% endfor %}
-                              </label>
-                              {% endif %}
-                            {% endwith %}
                             </div>
           
                             <div class="form-outline mb-4">
