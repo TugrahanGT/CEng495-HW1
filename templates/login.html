@@ -54,15 +54,15 @@
                               <input type="text" name="username" id="form2Example11" class="form-control"
                                 placeholder="Enter your username" />
                               <label class="form-label" for="form2Example11">Username</label>
+                              {% with messages = get_flashed_messages() %}
+                                {% if messages %}
                               <label class="form-label" for = "form2Example11">
-                                  {% with messages = get_flashed_messages() %}
-                                    {% if messages %}
                                       {% for message in messages %}
                                         {% message %}
                                       {% endfor %}
-                                    {% endif %}
-                                  {% endwith %}
                               </label>
+                              {% endif %}
+                            {% endwith %}
                             </div>
           
                             <div class="form-outline mb-4">
