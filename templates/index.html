@@ -79,8 +79,8 @@
         <div class="container">
           <div class="row">
             {% if categoryID == -1 %}
-              {% for categories in items %}
-                {% for item in categories %}
+              {% for categories in items.items() %}
+                {% for item in categories[1] %}
                     <div class="col-md-4">
                         <div class="card mb-4 box-shadow">
                             <img class="card-img-top" alt="{{ item.itemName }}" style="height: 225px; width: 100%; display: block;" src="{{ item.image }}" data-holder-rendered="true">

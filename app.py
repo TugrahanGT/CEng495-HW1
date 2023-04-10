@@ -51,7 +51,6 @@ def index():
         return render_template("index.html", items = all_items, categoryID = -1)
     else:
         return render_template("index.html", items = all_items, categoryID = -1)
-    
 @app.route("/login/", methods = ("GET", "POST"))
 def login():
     if not session.get("username"):
