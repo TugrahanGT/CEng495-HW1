@@ -57,7 +57,7 @@
                             </h5>
                           {% endif %}
                           {% endwith %}
-                          <form action="{{ url_for('login') }}" method="post">
+                          <form action="{{ url_for('createUser') }}" method="post">
           
                             <div class="form-outline mb-4">
                               <input type="text" name="username" id="form2Example11" class="form-control"
@@ -71,14 +71,7 @@
                             </div>
           
                             <div class="text-center pt-1 mb-5 pb-1">
-                              <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Log
-                                in</button>
-                            </div>
-          
-                            <div class="d-flex align-items-center justify-content-center pb-4">
-                              <p class="mb-0 me-2">Don't have an account? </p>
-                              <hr/>
-                              <a href="{{ url_for('createUser') }}" class="btn btn-outline-danger"> Create new</a>
+                              <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Register</button>
                             </div>
           
                           </form>

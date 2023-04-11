@@ -232,6 +232,44 @@ def deleteUser():
         return redirect(url_for("index"))
     return redirect(url_for("index"))
 
+@app.route("/createUser", methods = ("GET", "POST"))
+def createUser():
+    global users
+    if not session.get("username"):
+        if request.method == "POST":
+            username = request.form["username"]
+            password = request.form["password"]
+            allUsers = list(users.find())
+            if not username:
+                flash("Please provide a username!")
+            elif not password:
+                flash("Please provide a password!")
+            else:
+                for user in allUsers:
+                    if user["username"] == username:
+                        flash(f"Username {username} is taken!")
+                        return redirect(url_for('createUser'))
+                lastUserID = allUsers[len(allUsers) - 1]["_id"]
+                users.insert_one(
+                    {
+                        "_id": lastUserID + 1,
+                        "username": username,
+                        "password": password,
+                        "avgRating": 0,
+                        "ratings": [],
+                        "reviews": [],
+                        "role": {
+                            "roleID": 1,
+                            "type": "User"
+                        }
+                    }
+                )
+                flash(f"Registered successfully!")
+                return redirect(url_for('createUser'))
+            return redirect(url_for('createUser'))
+        return render_template("register.html")
+    return redirect(url_for('index'))
+
 def delRevRateFromProducts(userReviews, userRatings, flaggedUsername):
     global all_items, categories
     for review in userReviews:
