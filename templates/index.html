@@ -43,11 +43,12 @@
       <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-dark">
         <div class="position-sticky">
             <div class="mx-3 mt-4 bg-dark text-center">
-                <span class="mt-1 mb-5 pb-1" style="font-size: 15px; color: red;"> Categories </span>
-                <a href="{{ url_for('index', categoryID = 0) }}" class="text-light" style="font-size: 12px; font-weight: bold;"> Clothings </a>
-                <a href="{{ url_for('index', categoryID = 1) }}" class="text-light" style="font-size: 12px; font-weight: bold;"> Computer Components </a>
-                <a href="{{ url_for('index', categoryID = 2) }}" class="text-light" style="font-size: 12px; font-weight: bold;"> Monitors </a>
-                <a href="{{ url_for('index', categoryID = 3) }}" class="text-light" style="font-size: 12px; font-weight: bold;"> Snacks </a>
+                <span class="mt-1 mb-5 pb-1" style="color: red; border-bottom: 1px solid rgba(255, 255, 255, 1);"> Categories </span>
+                <p></p>
+                <a href="{{ url_for('index', categoryID = 0) }}" class="text-light" style="font-weight: lighter;"> Clothings </a>
+                <a href="{{ url_for('index', categoryID = 1) }}" class="text-light" style="font-weight: lighter;"> Computer Components </a>
+                <a href="{{ url_for('index', categoryID = 2) }}" class="text-light" style="font-weight: lighter;"> Monitors </a>
+                <a href="{{ url_for('index', categoryID = 3) }}" class="text-light" style="font-weight: lighter;"> Snacks </a>
             </div>
         </div>
       </nav>
