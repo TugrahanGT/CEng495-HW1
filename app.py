@@ -113,7 +113,10 @@ def profile():
                 productName = product["itemName"]
                 break
         reviews.append({"productName": productName, "reviewText": review["reviewText"]})
+    if session.get("role") == "Admin":
+        return render_template("profile.html", avgRating = avgRating, totalReviews = totalReviews, userReviews = reviews, users = allUsers)
     return render_template("profile.html", avgRating = avgRating, totalReviews = totalReviews, userReviews = reviews)
+    
 
 @app.route("/product", methods = ("GET", "POST"))
 def product():
@@ -421,7 +424,7 @@ def deleteRevRateFromUser(reviewList, ratingList, productID, categoryID, userID)
 
 def add_review(username, reviewText, productID, categoryID):
     global all_items, categories
-    reviewList = all_items[categoryID][productID]["reviews"]
+    reviewList = all_items[categoryID][find_product_idx(categoryID, productID)]["reviews"]
     idx, flag = 0, False
     for review in reviewList:
         if review["author"] == username:
@@ -429,7 +432,7 @@ def add_review(username, reviewText, productID, categoryID):
             break
         idx += 1
     if flag:
-        all_items[categoryID][productID]["reviews"][idx]["reviewText"] = reviewText
+        all_items[categoryID][find_product_idx(categoryID, productID)]["reviews"][idx]["reviewText"] = reviewText
         categories.update_one(
             {
                 "_id": categoryID,
@@ -437,7 +440,7 @@ def add_review(username, reviewText, productID, categoryID):
             },
             {
                 "$set": {
-                    "items.$.reviews": all_items[categoryID][productID]["reviews"]
+                    "items.$.reviews": all_items[categoryID][find_product_idx(categoryID, productID)]["reviews"]
                 }
             }
         )
@@ -462,7 +465,7 @@ def add_review(username, reviewText, productID, categoryID):
 
 def add_rating(username, rating, productID, categoryID):
     global all_items, categories
-    ratingList = all_items[categoryID][productID]["ratings"]
+    ratingList = all_items[categoryID][find_product_idx(categoryID, productID)]["ratings"]
     idx, flag, totalRating = 0, False, 0
     for ratings in ratingList:
         if ratings["author"] == username:
