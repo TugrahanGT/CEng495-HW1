@@ -116,15 +116,13 @@
               <div class="row">
                 <dt class="col-3">Rating</dt>
                 <dd class="col-9">{{ item.rating }}</dd>
+
+                <dt class="col-3">Price</dt>
+                <dd class="col-9">{{ item.price }}</dd>
+
+                <dt class="col-3">Description</dt>
+                <dd class="col-9">{{ item.description }}</dd>
               </div>
-    
-              <div class="mb-3">
-                <span class="h5">{{ item.price }}₺</span>
-              </div>
-    
-              <p>
-                {{ item.description }}
-              </p>
     
               {% if categoryID == 0 %}
               <div class="row">
