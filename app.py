@@ -120,7 +120,6 @@ def profile():
         return render_template("profile.html", avgRating = avgRating, totalReviews = totalReviews, userReviews = reviews, users = allUsers)
     return render_template("profile.html", avgRating = avgRating, totalReviews = totalReviews, userReviews = reviews)
     
-
 @app.route("/product", methods = ("GET", "POST"))
 def product():
     global all_items
@@ -265,7 +264,7 @@ def createUser():
                     }
                 )
                 flash(f"Registered successfully!")
-                return redirect(url_for('createUser'))
+                return redirect(url_for('login'))
             return redirect(url_for('createUser'))
         return render_template("register.html")
     return redirect(url_for('index'))

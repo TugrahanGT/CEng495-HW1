@@ -33,6 +33,24 @@
         </style>
     </head>
     <body>
+        <header>
+          <!-- Fixed navbar -->
+          <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="{{ url_for('index') }}">Gökçwnify</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+                </li>
+              </ul>
+              <a class="btn btn-outline-success my-2 my-sm-0" href="{{ url_for('login') }}"> Log In </a>
+              <a class="btn btn-outline-success my-2 my-sm-0" href="{{ url_for('createUser') }}"> Register </a>
+            </div>
+          </nav>        
+        </header>
         <section class="h-100 gradient-form" style="background-color: #eee;">
             <div class="container py-5 h-100">
               <div class="row d-flex justify-content-center align-items-center h-100">
@@ -61,12 +79,12 @@
           
                             <div class="form-outline mb-4">
                               <input type="text" name="username" id="form2Example11" class="form-control"
-                                placeholder="Enter your username" />
+                                placeholder="Enter your username" minlength="8"/>
                               <label class="form-label" for="form2Example11">Username</label>
                             </div>
           
                             <div class="form-outline mb-4">
-                              <input type="password" name="password" id="form2Example22" class="form-control" />
+                              <input type="password" name="password" id="form2Example22" class="form-control" minlength="8"/>
                               <label class="form-label" for="form2Example22">Password</label>
                             </div>
           
