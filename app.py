@@ -241,6 +241,7 @@ def delRevRateFromProducts(userReviews, userRatings, flaggedUsername):
             if r["author"] == flaggedUsername:
                 rList = rList[:idxPR] + rList[idxPR+1:]
                 break
+            idxPR += 1
         categories.update_one(
             {
                 "_id": categoryID,
@@ -264,6 +265,7 @@ def delRevRateFromProducts(userReviews, userRatings, flaggedUsername):
             if r["author"] == flaggedUsername:
                 rList = rList[:idxPR] + rList[idxPR+1:]
                 break
+            idxPR += 1
         for r in rList:
             total_rating += r["rating"]
         if len(rList) > 0:
