@@ -24,29 +24,33 @@ client = MongoClient("mongodb+srv://tugrahangt:ZwW11yGKKlPJPJEE@clusterdb.9sbkfg
 db = client.hw1_mongoDB
 users = db.users
 categories = db.finalizedCategories
-categoriesList = list(categories.find())
 
-clothings = categoriesList[0]
-computerComponents = categoriesList[1]
-monitors = categoriesList[2]
-snacks = categoriesList[3]
-
-categoriesList.clear()
 all_items = {0: [], 1: [], 2: [], 3: []}
 
-for item in clothings["items"]:
-    all_items[0].append(item)
-for item in computerComponents["items"]:
-    all_items[1].append(item)
-for item in monitors["items"]:
-    all_items[2].append(item)
-for item in snacks["items"]:
-    all_items[3].append(item)
+def init():
+    global all_items, users, categories
+    categoriesList = list(categories.find())
 
+    clothings = categoriesList[0]
+    computerComponents = categoriesList[1]
+    monitors = categoriesList[2]
+    snacks = categoriesList[3]
+
+    categoriesList.clear()
+
+    for item in clothings["items"]:
+        all_items[0].append(item)
+    for item in computerComponents["items"]:
+        all_items[1].append(item)
+    for item in monitors["items"]:
+        all_items[2].append(item)
+    for item in snacks["items"]:
+        all_items[3].append(item)
 
 @app.route("/")
 def index():
     global all_items
+    init()
     if not request.args.get("categoryID"):
         return render_template("index.html", items = all_items, categoryID = -1)
     else:
@@ -283,6 +287,8 @@ def delRevRateFromProducts(userReviews, userRatings, flaggedUsername):
             }
         )
     
+
+
 def find_product_idx(categoryID, productID):
     global all_items
     idx = 0
