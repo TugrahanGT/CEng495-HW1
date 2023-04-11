@@ -129,7 +129,7 @@ def product():
                 all_items[categoryID] = []
                 for item in updatedItem["items"]:
                     all_items[categoryID].append(item)
-                return render_template("product.html", item = all_items[categoryID][productID], categoryID = categoryID)
+                return render_template("product.html", item = all_items[categoryID][find_product_idx(categoryID, productID)], categoryID = categoryID)
         elif request.form["submit_btn"] == "rate":
             rating = int(request.form["rating"])
             if add_rating(username, rating, productID, categoryID):
@@ -138,10 +138,10 @@ def product():
                 all_items[categoryID] = []
                 for item in updatedItem["items"]:
                     all_items[categoryID].append(item)
-                return render_template("product.html", item = all_items[categoryID][productID], categoryID = categoryID)
+                return render_template("product.html", item = all_items[categoryID][find_product_idx(categoryID, productID)], categoryID = categoryID)
     productID = int(request.args.get("product"))
     categoryID = int(request.args.get("categoryID"))
-    return render_template("product.html", item = all_items[categoryID][productID], categoryID = categoryID)
+    return render_template("product.html", item = all_items[categoryID][find_product_idx(categoryID, productID)], categoryID = categoryID)
 
 @app.route("/deleteProduct", methods = ("GET", "POST"))
 def deleteProduct():
@@ -154,27 +154,18 @@ def deleteProduct():
 def addProduct():
     global categories
     if request.method == "POST":
-        productName = request.form["name"]
-        productDescription = request.form["descp"]
-        productPrice = int(request.form["price"])
-        productSeller = request.form["seller"]
-        productImg = request.form["img"]
-        productSpec = request.form["spec"]
-        newProduct = {
-            "itemName": productName,
-            "description": productDescription,
-            "price": productPrice,
-            "seller": productSeller,
-            "image": productImg,
-            "spec": productSpec,
-            "ratings": [],
-            "reviews": [],
-            "rating": 0
-        }
-        addProductHelper(int(request.args.get("categoryID")), newProduct)
+        addProductHelper(int(request.args.get("categoryID")), request.form)
         return redirect(url_for("index"))
     return redirect(url_for("index"))
             
+def find_product_idx(categoryID, productID):
+    global all_items
+    idx = 0
+    for item in all_items[categoryID]:
+        if item["itemID"] == productID:
+            return idx
+        idx += 1
+
 def addProductHelper(categoryID, newProduct):
     global all_items, categories
     newItemID = 0

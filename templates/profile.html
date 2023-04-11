@@ -74,27 +74,32 @@
                       <p class="text-muted mb-1">{{ session.role }}</p>
                     </div>
                   </div>
-                  <div class="card mb-4 mb-lg-0">
-                    <div class="card-body p-0">
-                      <ul class="list-group list-group-flush rounded-3">
-                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                          <a class="nav-link" href="#" onclick="openForm('clothingForm')"> Add New Clothing </a>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                          <a class="nav-link" href="#" onclick="openForm('ccForm')"> Add New Computer Component </a>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                          <a class="nav-link" href="#" onclick="openForm('monitorForm')"> Add New Monitor </a>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                          <a class="nav-link" href="#" onclick="openForm('snackForm')"> Add New Snack </a>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                          <a class="nav-link" href="#" onclick="openForm('aUserForm')"> Add New User </a>
-                        </li>
-                      </ul>
+                  {% if session.role == "Admin" %}
+                    <div class="card mb-4 mb-lg-0">
+                      <div class="card-body p-0">
+                        <ul class="list-group list-group-flush rounded-3">
+                          <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                            <a class="nav-link" href="#" onclick="openForm('clothingForm')"> Add New Clothing </a>
+                          </li>
+                          <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                            <a class="nav-link" href="#" onclick="openForm('ccForm')"> Add New Computer Component </a>
+                          </li>
+                          <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                            <a class="nav-link" href="#" onclick="openForm('monitorForm')"> Add New Monitor </a>
+                          </li>
+                          <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                            <a class="nav-link" href="#" onclick="openForm('snackForm')"> Add New Snack </a>
+                          </li>
+                          <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                            <a class="nav-link" href="#" onclick="openForm('aUserForm')"> Add New User </a>
+                          </li>
+                          <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                            <a class="nav-link" href="#" onclick="openForm('delUserForm')"> Delete User </a>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
-                  </div>
+                  {% endif %}
                 </div>
                 <div class="col-lg-8">
                   <div class="card mb-4">
@@ -137,6 +142,7 @@
                         </div>
                       </div>
                     </div>
+                    {% if session.role == "Admin" %}
                     <div class="col-md-12">
                       <div class="card mb-4 mb-md-0">
                         <div class="card-body">
@@ -144,13 +150,13 @@
                               <div class="row mb-4">
                                 <div class="col">
                                     <div class="form-outline">
-                                    <input type="text" id="form6Example1" class="form-control" />
+                                    <input name="itemName" type="text" id="form6Example1" class="form-control" />
                                     <label class="form-label" for="form6Example1">Name</label>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-outline">
-                                    <input type="text" id="form6Example2" class="form-control" />
+                                    <input name="description" type="text" id="form6Example2" class="form-control" />
                                     <label class="form-label" for="form6Example2">Description</label>
                                     </div>
                                 </div>
@@ -158,13 +164,13 @@
                               <div class="row mb-4">
                                 <div class="col">
                                     <div class="form-outline">
-                                    <input type="number" id="form6Example1" class="form-control" />
+                                    <input name="price" type="number" id="form6Example1" class="form-control" />
                                     <label class="form-label" for="form6Example1">Price</label>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-outline">
-                                    <input type="text" id="form6Example2" class="form-control" />
+                                    <input name="seller" type="text" id="form6Example2" class="form-control" />
                                     <label class="form-label" for="form6Example2">Seller</label>
                                     </div>
                                 </div>
@@ -172,13 +178,13 @@
                               <div class="row mb-4">
                                 <div class="col">
                                     <div class="form-outline">
-                                    <input type="text" id="form6Example1" class="form-control" />
+                                    <input name="image" type="text" id="form6Example1" class="form-control" />
                                     <label class="form-label" for="form6Example1">Image Link</label>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-outline">
-                                    <input type="text" id="form6Example2" class="form-control" />
+                                    <input name="size" type="text" id="form6Example2" class="form-control" />
                                     <label class="form-label" for="form6Example2">Size</label>
                                     </div>
                                 </div>
@@ -186,7 +192,7 @@
                               <div class="row mb-4">
                                 <div class="col">
                                     <div class="form-outline">
-                                    <input type="text" id="form6Example1" class="form-control" />
+                                    <input name="colour" type="text" id="form6Example1" class="form-control" />
                                     <label class="form-label" for="form6Example1">Colour</label>
                                     </div>
                                 </div>
@@ -203,13 +209,13 @@
                             <div class="row mb-4">
                               <div class="col">
                                   <div class="form-outline">
-                                  <input name="name" type="text" id="form6Example1" class="form-control" />
+                                  <input name="itemName" type="text" id="form6Example1" class="form-control" />
                                   <label class="form-label" for="form6Example1">Name</label>
                                   </div>
                               </div>
                               <div class="col">
                                   <div class="form-outline">
-                                  <input name="descp" type="text" id="form6Example2" class="form-control" />
+                                  <input name="description" type="text" id="form6Example2" class="form-control" />
                                   <label class="form-label" for="form6Example2">Description</label>
                                   </div>
                               </div>
@@ -231,7 +237,7 @@
                             <div class="row mb-4">
                               <div class="col">
                                   <div class="form-outline">
-                                  <input name="img" type="text" id="form6Example1" class="form-control" />
+                                  <input name="image" type="text" id="form6Example1" class="form-control" />
                                   <label class="form-label" for="form6Example1">Image Link</label>
                                   </div>
                               </div>
@@ -256,13 +262,13 @@
                             <div class="row mb-4">
                               <div class="col">
                                   <div class="form-outline">
-                                  <input type="text" id="form6Example1" class="form-control" />
+                                  <input name="itemName" type="text" id="form6Example1" class="form-control" />
                                   <label class="form-label" for="form6Example1">Name</label>
                                   </div>
                               </div>
                               <div class="col">
                                   <div class="form-outline">
-                                  <input type="text" id="form6Example2" class="form-control" />
+                                  <input name="description" type="text" id="form6Example2" class="form-control" />
                                   <label class="form-label" for="form6Example2">Description</label>
                                   </div>
                               </div>
@@ -270,13 +276,13 @@
                             <div class="row mb-4">
                               <div class="col">
                                   <div class="form-outline">
-                                  <input type="number" id="form6Example1" class="form-control" />
+                                  <input name="price" type="number" id="form6Example1" class="form-control" />
                                   <label class="form-label" for="form6Example1">Price</label>
                                   </div>
                               </div>
                               <div class="col">
                                   <div class="form-outline">
-                                  <input type="text" id="form6Example2" class="form-control" />
+                                  <input name="seller" type="text" id="form6Example2" class="form-control" />
                                   <label class="form-label" for="form6Example2">Seller</label>
                                   </div>
                               </div>
@@ -284,13 +290,13 @@
                             <div class="row mb-4">
                               <div class="col">
                                   <div class="form-outline">
-                                  <input type="text" id="form6Example1" class="form-control" />
+                                  <input name="image" type="text" id="form6Example1" class="form-control" />
                                   <label class="form-label" for="form6Example1">Image Link</label>
                                   </div>
                               </div>
                               <div class="col">
                                   <div class="form-outline">
-                                  <input type="text" id="form6Example2" class="form-control" />
+                                  <input name="spec" type="text" id="form6Example2" class="form-control" />
                                   <label class="form-label" for="form6Example2">Spec</label>
                                   </div>
                               </div>
@@ -309,13 +315,13 @@
                             <div class="row mb-4">
                               <div class="col">
                                   <div class="form-outline">
-                                  <input type="text" id="form6Example1" class="form-control" />
+                                  <input name="itemName" type="text" id="form6Example1" class="form-control" />
                                   <label class="form-label" for="form6Example1">Name</label>
                                   </div>
                               </div>
                               <div class="col">
                                   <div class="form-outline">
-                                  <input type="text" id="form6Example2" class="form-control" />
+                                  <input name="description" type="text" id="form6Example2" class="form-control" />
                                   <label class="form-label" for="form6Example2">Description</label>
                                   </div>
                               </div>
@@ -323,13 +329,13 @@
                             <div class="row mb-4">
                               <div class="col">
                                   <div class="form-outline">
-                                  <input type="number" id="form6Example1" class="form-control" />
+                                  <input name="price" type="number" id="form6Example1" class="form-control" />
                                   <label class="form-label" for="form6Example1">Price</label>
                                   </div>
                               </div>
                               <div class="col">
                                   <div class="form-outline">
-                                  <input type="text" id="form6Example2" class="form-control" />
+                                  <input name="seller" type="text" id="form6Example2" class="form-control" />
                                   <label class="form-label" for="form6Example2">Seller</label>
                                   </div>
                               </div>
@@ -337,7 +343,7 @@
                             <div class="row mb-4">
                               <div class="col">
                                   <div class="form-outline">
-                                  <input type="text" id="form6Example1" class="form-control" />
+                                  <input name="image" type="text" id="form6Example1" class="form-control" />
                                   <label class="form-label" for="form6Example1">Image Link</label>
                                   </div>
                               </div>
@@ -351,13 +357,16 @@
                       </div>
                       </div>
                     </div>
+                    {% endif %}
                   </div>
                 </div>
               </div>
             </div>
           <script>
             function openForm(formId){
-                console.log(formId)
+                let elements = document.querySelectorAll('form');
+                for (let i = 0; i < elements.length; i++)
+                  elements[i].style.display = "none";
                 document.getElementById(formId).style.display = "block";
             }
           </script>
