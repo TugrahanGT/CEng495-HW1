@@ -81,9 +81,10 @@ def login():
 
 @app.route("/logout")
 def logout():
-    session["loggedIn"] = False
-    session["username"] = None
-    session["role"] = None
+    if session.get("username"):
+        session["loggedIn"] = False
+        session["username"] = None
+        session["role"] = None
     return redirect(url_for("index"))
 
 @app.route("/profile", methods = ("GET", "POST"))
@@ -145,19 +146,138 @@ def product():
 
 @app.route("/deleteProduct", methods = ("GET", "POST"))
 def deleteProduct():
-    productID = int(request.args.get("product"))
-    categoryID = int(request.args.get("categoryID"))
-    deleteProductHelper(productID, categoryID)
+    if session.get("role") == "Admin":
+        productID = int(request.args.get("product"))
+        categoryID = int(request.args.get("categoryID"))
+        deleteProductHelper(productID, categoryID)
+        return redirect(url_for("index"))
     return redirect(url_for("index"))
 
 @app.route("/addProduct", methods = ("GET", "POST"))
 def addProduct():
     global categories
-    if request.method == "POST":
-        addProductHelper(int(request.args.get("categoryID")), request.form)
+    if session.get("role") == "Admin":
+        if request.method == "POST":
+            addProductHelper(int(request.args.get("categoryID")), request.form)
+            return redirect(url_for("index"))
         return redirect(url_for("index"))
     return redirect(url_for("index"))
             
+@app.route("/addUser", methods = ("GET", "POST"))
+def addUser():
+    global users
+    if session.get("role") == "Admin":
+        if request.method == "POST":
+            newUsername = request.form["username"]
+            newPassword = request.form["password"]
+            newRole = request.form["role"]
+            newRoleID = 1 if newRole == "User" else 0
+            allUsers = list(users.find())
+            flag = False
+            for user in allUsers:
+                if newUsername == user["username"]:
+                    flash(f"User with username: {newUsername} already exists!")
+                    flag = True
+                    break
+            if not flag:
+                newID = allUsers[len(allUsers) - 1]["_id"] + 1
+                users.insert_one(
+                    {
+                        "_id": newID,
+                        "username": newUsername,
+                        "password": newPassword,
+                        "avgRating": 0,
+                        "ratings": [],
+                        "reviews": [],
+                        "role": {
+                            "roleID": newRoleID,
+                            "type": newRole
+                        }
+                    }
+                )
+                flash(f"User with username: {newUsername} successfully inserted!")
+            return redirect(url_for("profile"))
+        return redirect(url_for("index"))
+    return redirect(url_for("index"))
+
+@app.route("/deleteUser", methods = ("GET", "POST"))
+def deleteUser():
+    global users
+    if session.get("role") == "Admin":
+        if request.method == "POST":
+            flaggedUsername = request.form["username"]
+            allUsers = list(users.find())
+            idx = 0
+            for user in allUsers:
+                if user["username"] == flaggedUsername:
+                    break
+                idx += 1
+            userReviews = allUsers[idx]["reviews"]
+            userRatings = allUsers[idx]["ratings"]
+            delRevRateFromProducts(userReviews, userRatings, flaggedUsername)
+            users.delete_one(
+                {
+                    "_id": allUsers[idx]["_id"],
+                    "username": flaggedUsername
+                }
+            )
+            flash(f"User with username: {flaggedUsername} deleted successfully!")
+            return redirect(url_for("profile"))
+        return redirect(url_for("index"))
+    return redirect(url_for("index"))
+
+def delRevRateFromProducts(userReviews, userRatings, flaggedUsername):
+    global all_items, categories
+    for review in userReviews:
+        categoryID = review["categoryID"]
+        productID = review["productID"]
+        idx = find_product_idx(categoryID, productID)
+        rList = all_items[categoryID][idx]["reviews"]
+        idxPR = 0
+        for r in rList:
+            if r["author"] == flaggedUsername:
+                rList = rList[:idxPR] + rList[idxPR+1:]
+                break
+        categories.update_one(
+            {
+                "_id": categoryID,
+                "items.itemID": productID
+            },
+            {
+                "$set": {
+                    "items.$.reviews": rList
+                }
+            }
+        )
+    
+    for rating in userRatings:
+        categoryID = rating["categoryID"]
+        productID = rating["productID"]
+        idx = find_product_idx(categoryID, productID)
+        rList = all_items[categoryID][idx]["ratings"]
+        idxPR = 0
+        total_rating = 0
+        for r in rList:
+            if r["author"] == flaggedUsername:
+                rList = rList[:idxPR] + rList[idxPR+1:]
+                break
+        for r in rList:
+            total_rating += r["rating"]
+        if len(rList) > 0:
+            total_rating = total_rating / len(rList)
+        categories.update_one(
+            {
+                "_id": categoryID,
+                "items.itemID": productID
+            },
+            {
+                "$set": {
+                    "items.$.ratings": rList,
+                    "items.$.rating": total_rating
+                }
+            }
+        )
+    
 def find_product_idx(categoryID, productID):
     global all_items
     idx = 0

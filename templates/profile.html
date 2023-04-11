@@ -94,7 +94,7 @@
                             <a class="nav-link" href="#" onclick="openForm('aUserForm')"> Add New User </a>
                           </li>
                           <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                            <a class="nav-link" href="#" onclick="openForm('delUserForm')"> Delete User </a>
+                            <a class="nav-link" href="#" onclick="openForm('dUserForm')"> Delete User </a>
                           </li>
                         </ul>
                       </div>
@@ -354,6 +354,70 @@
                               </div>
                             </div>
                         </form>
+
+                        <form action="{{ url_for('addUser') }}"id="aUserForm" style="display: none;" method="post">
+                          <div class="row mb-4">
+                            <div class="col">
+                                <div class="form-outline">
+                                <input name="username" type="text" id="form6Example1" class="form-control" />
+                                <label class="form-label" for="form6Example1">Username</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-outline">
+                                <input name="password" type="password" id="form6Example2" class="form-control" />
+                                <label class="form-label" for="form6Example2">Password</label>
+                                </div>
+                            </div>
+                          </div>
+                          <div class="row mb-4">
+                            <div class="col">
+                                <div class="form-outline">
+                                <select name="role" id="form6Example1" type="select" class="form-control">
+                                  <option value="User">User</option>
+                                  <option value="Admin">Admin</option>
+                                </select>
+                                <label class="form-label" for="form6Example1">Role</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-outline">
+                                <button type="submit" class="btn btn-primary btn-block mb-4">Add User</button>
+                                </div>
+                            </div>
+                          </div>
+                      </form>
+
+                      <form action="{{ url_for('deleteUser') }}"id="dUserForm" style="display: none;" method="post">
+                        <div class="row mb-4">
+                          <div class="col">
+                              <div class="form-outline">
+                              <select name="username" id="form6Example1" type="select" class="form-control">
+                                {% for user in users %}
+                                  <option value="{{ user.username }}">{{ user.username }}</option>
+                                {% endfor %}
+                              </select>
+                              <label class="form-label" for="form6Example1">Username</label>
+                              </div>
+                          </div>
+                          <div class="col">
+                              <div class="form-outline">
+                              <button type="submit" class="btn btn-primary btn-block mb-4">Delete User</button>
+                              </div>
+                          </div>
+                        </div>
+                    </form>
+
+                      {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                          <h4 style="color: red;">
+                            {% for message in messages %}
+                              {{ message }}
+                            {% endfor %}
+                          </h4>
+                        {% endif %}
+                      {% endwith %}
+                      
                       </div>
                       </div>
                     </div>
