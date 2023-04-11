@@ -47,7 +47,7 @@
                 </li>
               </ul>
               <a class="btn btn-outline-success my-2 my-sm-0" href="{{ url_for('login') }}"> Log In </a>
-              <a class="btn btn-outline-success my-2 my-sm-0" href="{{ url_for('createUser') }}"> Register </a>
+              <a class="btn btn-outline-success my-2 my-sm-0" href="{{ url_for('createUser') }}" style="margin-left:1%;"> Register </a>
             </div>
           </nav>        
         </header>
@@ -80,12 +80,12 @@
                             <div class="form-outline mb-4">
                               <input type="text" name="username" id="form2Example11" class="form-control"
                                 placeholder="Enter your username" minlength="8"/>
-                              <label class="form-label" for="form2Example11">Username</label>
+                              <label class="form-label tex-muted" for="form2Example11">Username should consist of at least 8 characters</label>
                             </div>
           
                             <div class="form-outline mb-4">
                               <input type="password" name="password" id="form2Example22" class="form-control" minlength="8"/>
-                              <label class="form-label" for="form2Example22">Password</label>
+                              <label class="form-label tex-muted" for="form2Example22">Password should consist of at least 8 characters</label>
                             </div>
           
                             <div class="text-center pt-1 mb-5 pb-1">
