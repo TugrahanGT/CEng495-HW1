@@ -309,7 +309,7 @@ def delRevRateFromProducts(userReviews, userRatings, flaggedUsername):
         for r in rList:
             total_rating += r["rating"]
         if len(rList) > 0:
-            total_rating = total_rating / len(rList)
+            total_rating = round(total_rating / len(rList), 3)
         categories.update_one(
             {
                 "_id": categoryID,
@@ -469,7 +469,7 @@ def deleteRevRateFromUser(reviewList, ratingList, productID, categoryID, userID)
     if ratingList:
         for rating in ratingList:
             totalRating += rating["rating"]
-        totalRating = totalRating / len(ratingList)
+        totalRating = round(totalRating / len(ratingList), 3)
     users.update_one(
         {
             "_id": userID
@@ -538,7 +538,7 @@ def add_rating(username, rating, productID, categoryID):
         ratingCount = len(ratingList)
         for ratings in ratingList:
             totalRating += ratings["rating"]
-        avgRating = totalRating / ratingCount
+        avgRating = round(totalRating / ratingCount, 3)
         categories.update_one(
             {
                 "_id": categoryID,
@@ -558,7 +558,7 @@ def add_rating(username, rating, productID, categoryID):
         ratingCount = len(ratingList)
         for ratings in ratingList:
             totalRating += ratings["rating"]
-        avgRating = (totalRating + rating) / (ratingCount + 1)
+        avgRating = round((totalRating + rating) / (ratingCount + 1), 3)
         newRating = {"ratingID": lastRatingID + 1, "rating": rating, "author": username}
         categories.update_one(
             {
@@ -642,7 +642,7 @@ def addRatingUser(productID, categoryID, rating, username):
         allUsers[idxUser]["ratings"][idx]["rating"] = rating
         for ratingElement in ratingList:
             totalRating += ratingElement["rating"]
-        totalRating = totalRating / len(ratingList)
+        totalRating = round(totalRating / len(ratingList), 3)
         users.update_one(
             {
                 "username": username
@@ -662,7 +662,7 @@ def addRatingUser(productID, categoryID, rating, username):
         for ratingElement in ratingList:
             totalRating += ratingElement["rating"]
         totalRating += rating
-        totalRating = totalRating / (len(ratingList) + 1)
+        totalRating = round(totalRating / (len(ratingList) + 1), 3)
         users.update_one(
             {
                 "username": username
