@@ -20,7 +20,7 @@ snackProducts = []
 categories = None
 users = None
 
-client = MongoClient("mongodb+srv://tugrahangt:ZwW11yGKKlPJPJEE@clusterdb.9sbkfgg.mongodb.net/?retryWrites=true&w=majority")
+client = MongoClient("mongodbURI")
 db = client.hw1_mongoDB
 users = db.users
 categories = db.finalizedCategories
